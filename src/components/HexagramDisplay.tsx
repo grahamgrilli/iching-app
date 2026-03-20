@@ -8,10 +8,10 @@ function HexLine({
   value: LineValue;
   onClick?: () => void;
 }) {
-  const isYang = value === 8 || value === 9;
+  const isYang = value === 7 || value === 9;
   const isOld = value === 6 || value === 9;
-  const stroke = '#3d2914';
-  const strokeW = 3.5;
+  const stroke = 'var(--color-ink, #1a1a1a)';
+  const strokeW = 3.25;
 
   if (isYang) {
     return (

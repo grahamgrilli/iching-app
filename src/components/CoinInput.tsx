@@ -15,7 +15,7 @@ function CoinKey() {
         <span>Each ● = 3 · each ○ = 2 (add the three coins → total 6–9)</span>
       </div>
       <div className="coin-key-row muted small">
-        <span>6 = ○○○ (changing yin) · 7 = one ● · 8 = two ● · 9 = ●●● (changing yang)</span>
+        <span>6 = ○○○ · 7 = ●○○ (young yang, unbroken) · 8 = ●●○ (young yin, broken) · 9 = ●●●</span>
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 /**
  * I Ching hexagram data - 64 hexagrams in King Wen order
- * Basic data from Alfred Huang / Wilhelm-Baynes translations
+ * Judgement/Image: condensed Wilhelm-Baynes; line texts: full Wilhelm from iching-wilhelm-dataset (MIT)
  */
+
+import wilhelmLines from './wilhelmLines.json';
+import clearyInterpretations from './clearyInterpretations.json';
 
 export interface HexagramData {
   number: number;
@@ -14,6 +17,17 @@ export interface HexagramData {
   image: string;
   lines: Record<1 | 2 | 3 | 4 | 5 | 6, { text: string; comment?: string }>;
 }
+
+/** Taoist-oriented text (see README: not Thomas Cleary’s copyrighted book) */
+export interface TaoistInterpretationBlock {
+  judgement: string;
+  image: string;
+  lines: Record<string, string>;
+}
+
+type ClearyFile = Record<string, TaoistInterpretationBlock>;
+
+const clearyByHex = clearyInterpretations as ClearyFile;
 
 // Full hexagram database - truncated for brevity; will include key hexagrams
 // Source: Wilhelm/Baynes (iching-wilhelm-dataset, MIT)
@@ -84,16 +98,18 @@ const HEXAGRAMS: Omit<HexagramData, 'lines'>[] = [
   { number: 64, binary: '101010', unicode: '䷿', name: 'Before Completion', chinese: '未濟', pinyin: 'wèi jì', judgement: 'BEFORE COMPLETION. Success. But if the little fox, after nearly completing the crossing, gets his tail in the water, there is nothing that would further.', image: 'Fire over water: the image of the state before transition. Thus the superior man is careful in the differentiation of things.' },
 ];
 
+type WilhelmLinesFile = Record<string, Record<string, string>>;
 
-// Line texts for changing lines (6 and 9) - Wilhelm translation
-const LINE_TEXTS: Record<number, Record<number, string>> = {
-  1: { 1: 'Hidden dragon. Do not act.', 2: 'Dragon appearing in the field. It furthers one to see the great man.', 3: 'All day long the superior man is creatively active. At nightfall his mind is still beset with cares. Danger. No blame.', 4: 'Wavering flight over the depths. No blame.', 5: 'Flying dragon in the heavens. It furthers one to see the great man.', 6: 'Arrogant dragon will have cause to repent.' },
-  2: { 1: "When there is hoarfrost underfoot, solid ice is not far off.", 2: "Straight, square, great. Without purpose, yet nothing remains unfurthered.", 3: "Hidden lines. One is able to remain persevering. If by chance you are in the service of a king, seek not works, but bring to completion.", 4: "A tied-up sack. No blame, no praise.", 5: "A yellow lower garment brings supreme good fortune.", 6: "Dragons fight in the meadow. Their blood is black and yellow." },
-  // Add more as needed - structure supports all 64
-};
+const linesByHex = wilhelmLines as WilhelmLinesFile;
+
+const LINE_FALLBACK =
+  'Open the line in a printed I Ching for the exact Six/Nine wording for this place.';
 
 function getLineText(hexNum: number, lineNum: 1 | 2 | 3 | 4 | 5 | 6): string {
-  return LINE_TEXTS[hexNum]?.[lineNum] ?? `Line ${lineNum}: Consider this line in the context of the hexagram as a whole. The Wilhelm/Baynes translation provides detailed line interpretations.`;
+  const row = linesByHex[String(hexNum)];
+  const text = row?.[String(lineNum)];
+  if (text && text.length > 0) return text;
+  return `Line ${lineNum}: ${LINE_FALLBACK}`;
 }
 
 export function getHexagram(number: number): HexagramData {
@@ -110,6 +126,16 @@ export function getHexagramByBinary(binary: string): HexagramData {
   const padded = binary.padStart(6, '0');
   const num = BINARY_TO_NUMBER[padded];
   return getHexagram(num ?? 1);
+}
+
+/**
+ * Taoist I Ching–oriented text (Liu Yiming / Cleary tradition in spirit).
+ * Bundled copy is original summary material—not Thomas Cleary’s copyrighted wording.
+ */
+export function getTaoistIChingInterpretation(
+  number: number
+): TaoistInterpretationBlock | undefined {
+  return clearyByHex[String(number)];
 }
 
 const BINARY_TO_NUMBER: Record<string, number> = {

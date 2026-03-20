@@ -1,8 +1,8 @@
 /**
  * I Ching three-coin method (classical scoring)
- * Filled ● = 3 (yang / "heads"), empty ○ = 2 (yin / "tails")
- * Sum: 6 (○○○) = old yin — changing; 7 = one ●; 8 = two ●; 9 (●●●) = old yang — changing
- * For drawing + hexagram binary we treat 7 as yin (broken) and 8 as yang (solid): majority ● → unbroken line.
+ * Each ● = 3, each ○ = 2
+ * 6 = ○○○ old yin (changing) · 7 = ●○○ young yang · 8 = ●●○ young yin · 9 = ●●● old yang (changing)
+ * Line type for hexagram: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches Wilhelm/books.
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -11,8 +11,8 @@ export type LineType = 'old-yin' | 'young-yang' | 'young-yin' | 'old-yang';
 export function getLineType(value: LineValue): LineType {
   switch (value) {
     case 6: return 'old-yin';
-    case 7: return 'young-yin';
-    case 8: return 'young-yang';
+    case 7: return 'young-yang';
+    case 8: return 'young-yin';
     case 9: return 'old-yang';
   }
 }
@@ -28,38 +28,32 @@ export function coinsToLine(heads: number): LineValue {
   return sum as LineValue;
 }
 
-/** Yin/yang for hexagram: 6,7 = yin; 8,9 = yang (matches line drawing: one ● = broken, two ● = solid). */
+/** Classical yin/yang bit: 6,8 yin; 7,9 yang */
 export function lineToBinary(value: LineValue): 0 | 1 {
-  return (value === 8 || value === 9) ? 1 : 0;
+  return (value === 7 || value === 9) ? 1 : 0;
 }
 
-/** When changing: 6 (old yin) -> yang (1), 9 (old yang) -> yin (0) */
+/** When changing: 6 → yang; 9 → yin */
 export function changingLineToBinary(value: LineValue): 0 | 1 {
-  if (value === 6) return 1; // old yin becomes yang
-  if (value === 9) return 0; // old yang becomes yin
+  if (value === 6) return 1;
+  if (value === 9) return 0;
   return lineToBinary(value);
 }
 
-/** Build 6-digit binary string from bottom to top (line 1 = LSB) */
 export function linesToBinary(lines: LineValue[]): string {
   return lines.map(lineToBinary).reverse().join('');
 }
 
-/** Build resulting hexagram binary when lines change */
 export function linesToResultingBinary(lines: LineValue[]): string {
   return lines.map(changingLineToBinary).reverse().join('');
 }
 
-/** Pad binary to 6 digits for lookup (e.g. "111" -> "000111") */
 function padBinary(bin: string): string {
   return bin.padStart(6, '0');
 }
 
-/** Find hexagram number (1-64) from binary string in King Wen order */
 export function binaryToHexagramNumber(binary: string): number {
   const padded = padBinary(binary);
-  // King Wen sequence: binary maps to hexagram index
-  // Use lookup table - binary is read bottom to top
   const kingWenOrder: Record<string, number> = {
     '111111': 1, '000000': 2, '010001': 3, '100010': 4, '010111': 5, '111010': 6,
     '000010': 7, '010000': 8, '110111': 9, '111011': 10, '000111': 11, '111000': 12,
