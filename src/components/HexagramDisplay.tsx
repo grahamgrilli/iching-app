@@ -1,38 +1,78 @@
 import type { LineValue } from '../lib/cast';
 
-/** Brushstroke-style SVG line - yang (solid) or yin (broken), with optional changing emphasis */
-function BrushLine({
-  isYang,
-  isChanging,
+/** Straight segments with round caps (tapered-looking ends); strong yin = X in gap; strong yang = circle on solid. */
+function HexLine({
+  value,
   onClick,
 }: {
-  isYang: boolean;
-  isChanging: boolean;
+  value: LineValue;
   onClick?: () => void;
 }) {
-  const strokeClass = `brush-stroke ${isYang ? 'yang' : 'yin'} ${isChanging ? 'changing' : ''}`;
+  const isYang = value === 7 || value === 9;
+  const isOld = value === 6 || value === 9;
+  const stroke = '#3d2914';
+  const strokeW = 3.5;
+
   if (isYang) {
     return (
-      <path
-        d="M 5 12 Q 25 8 45 12 Q 55 14 85 12"
-        className={strokeClass}
-        onClick={onClick}
-        strokeWidth={isChanging ? 4 : 3}
-      />
+      <g onClick={onClick} className="hex-line-group">
+        <line
+          x1="6"
+          y1="10"
+          x2="94"
+          y2="10"
+          stroke={stroke}
+          strokeWidth={strokeW}
+          strokeLinecap="round"
+          className="hex-segment"
+        />
+        {isOld && value === 9 && (
+          <circle
+            cx="50"
+            cy="10"
+            r="3.8"
+            fill="none"
+            stroke={stroke}
+            strokeWidth={1.8}
+            className="moving-mark"
+          />
+        )}
+      </g>
     );
   }
+
+  // Yin: two segments
   return (
-    <g onClick={onClick}>
-      <path
-        d="M 5 12 Q 20 10 35 12"
-        className={strokeClass}
-        strokeWidth={isChanging ? 4 : 3}
+    <g onClick={onClick} className="hex-line-group">
+      <line
+        x1="6"
+        y1="10"
+        x2="39"
+        y2="10"
+        stroke={stroke}
+        strokeWidth={strokeW}
+        strokeLinecap="round"
+        className="hex-segment"
       />
-      <path
-        d="M 55 12 Q 70 14 85 12"
-        className={strokeClass}
-        strokeWidth={isChanging ? 4 : 3}
+      <line
+        x1="61"
+        y1="10"
+        x2="94"
+        y2="10"
+        stroke={stroke}
+        strokeWidth={strokeW}
+        strokeLinecap="round"
+        className="hex-segment"
       />
+      {isOld && value === 6 && (
+        <path
+          d="M 43 6 L 57 14 M 57 6 L 43 14"
+          stroke={stroke}
+          strokeWidth={1.6}
+          strokeLinecap="round"
+          className="moving-mark"
+        />
+      )}
     </g>
   );
 }
@@ -44,25 +84,23 @@ export default function HexagramDisplay({
   lines: LineValue[];
   onLineClick?: (idx: number) => void;
 }) {
-  // Line 1 is bottom, line 6 is top. Render top-to-bottom so line 6 at y=10, line 1 at y=70
+  // Line 6 at top (small y), line 1 at bottom (large y) — matches I Ching reading
   const ordered = [...lines].reverse();
   return (
     <svg
       className="hexagram-svg"
-      viewBox="0 0 90 80"
+      viewBox="0 0 100 84"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
     >
       {ordered.map((v, i) => {
-        const idx = lines.length - 1 - i;
-        const isYang = v === 7 || v === 9;
-        const isChanging = v === 6 || v === 9;
-        const y = 10 + i * 12;
+        const sourceIdx = lines.length - 1 - i;
+        const y = 6 + i * 13;
         return (
-          <g key={idx} transform={`translate(0, ${y})`}>
-            <BrushLine
-              isYang={isYang}
-              isChanging={isChanging}
-              onClick={onLineClick ? () => onLineClick(idx) : undefined}
+          <g key={sourceIdx} transform={`translate(0, ${y})`}>
+            <HexLine
+              value={v}
+              onClick={onLineClick ? () => onLineClick(sourceIdx) : undefined}
             />
           </g>
         );

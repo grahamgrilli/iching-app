@@ -1,127 +1,236 @@
-/* Hokusai-inspired I Ching */
+/* Treasure-map parchment + sepia ink */
 
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    180deg,
-    #1a2744 0%,
-    #2d3a5a 20%,
-    #3d4a6e 40%,
-    #2a3548 70%,
-    #1e2a3d 100%
-  );
-  color: #e8e4dc;
+  color: #2c2416;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 20%, rgba(139, 119, 101, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 60% at 80% 90%, rgba(160, 130, 90, 0.15) 0%, transparent 45%),
+    linear-gradient(165deg, #f7efd8 0%, #ebe2c8 35%, #e8debf 70%, #dccfb0 100%);
+  box-shadow: inset 0 0 120px rgba(80, 60, 40, 0.08);
 }
 
 .app-header {
-  padding: 1.5rem;
+  padding: 1.25rem;
   text-align: center;
+  border-bottom: 1px solid rgba(60, 45, 30, 0.15);
 }
 
 .app-header h1 {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 2.5rem;
-  font-weight: 400;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.35rem;
+  font-weight: 600;
   margin: 0;
-  color: #f0ebe3;
-  letter-spacing: 0.05em;
+  color: #3d2914;
+  letter-spacing: 0.04em;
 }
 
 .subtitle {
   margin: 0.25rem 0 0;
   font-size: 0.95rem;
-  opacity: 0.85;
+  color: #5c4832;
   font-style: italic;
 }
 
 .app-main {
   flex: 1;
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 2rem;
+  padding: 1rem 1.25rem 2rem;
   width: 100%;
 }
 
+/* Side-by-side: coins | hexagram */
+.casting-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 260px);
+  gap: 1.25rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .casting-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.casting-panel {
+  background: rgba(255, 252, 245, 0.65);
+  border: 1px solid rgba(80, 55, 35, 0.22);
+  border-radius: 6px;
+  padding: 1.25rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 2px 8px rgba(60, 45, 30, 0.06);
+}
+
+.hex-panel {
+  text-align: center;
+}
+
+.hex-panel-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5c4832;
+}
+
+.hex-panel-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: #7a6548;
+}
+
+.hexagram-panel-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0;
+}
+
 /* Coin input */
-.casting-section {
-  background: rgba(232, 228, 220, 0.06);
-  border: 1px solid rgba(232, 228, 220, 0.15);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+.coin-input {
+  text-align: left;
 }
 
 .coin-instruction {
-  margin: 0 0 1rem;
-  font-size: 0.95rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
   line-height: 1.5;
-  opacity: 0.9;
+  color: #3d2914;
 }
 
-.coin-legend {
+.coin-key {
+  margin-bottom: 1.1rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(90, 70, 45, 0.06);
+  border: 1px dashed rgba(80, 55, 35, 0.35);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: #4a3824;
+}
+
+.coin-key-row {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.coin-key-row.muted {
+  margin-top: 0.5rem;
+  opacity: 0.85;
+}
+
+.coin-key-row.small {
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.coin-key-sample {
+  display: inline-flex;
+  width: 1.5rem;
   justify-content: center;
-  gap: 2rem;
-  font-size: 0.8rem;
-  opacity: 0.8;
-  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.coin-key-sample.tails {
+  color: #6b5340;
+}
+
+.coin-key-sample.heads {
+  color: #3d2914;
 }
 
 .line-inputs {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.55rem;
 }
 
 .line-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  gap: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  background: rgba(80, 60, 40, 0.05);
+  border-radius: 4px;
+  border: 1px solid rgba(80, 55, 35, 0.1);
 }
 
 .line-label {
-  flex: 0 0 4rem;
-  font-size: 0.9rem;
+  flex: 0 0 2rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #5c4030;
 }
 
 .three-coins {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .coin {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border-radius: 50%;
-  border: 1px solid rgba(232, 228, 220, 0.4);
-  background: rgba(45, 58, 90, 0.6);
-  color: #c9b896;
+  border: 2px solid #6b5340;
+  background: #faf6ee;
+  color: #3d2914;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .coin:hover:not(:disabled) {
-  background: rgba(60, 75, 110, 0.8);
-  border-color: rgba(232, 228, 220, 0.6);
+  background: #fff;
+  border-color: #3d2914;
 }
 
 .coin.heads {
-  background: rgba(180, 140, 100, 0.4);
-  border-color: rgba(201, 184, 150, 0.6);
-  color: #e8dcc8;
+  background: #3d2914;
+  border-color: #2a1f12;
+  color: #f7efd8;
+}
+
+.coin.tails {
+  background: #faf6ee;
 }
 
 .line-value {
   flex: 1;
   text-align: right;
-  font-weight: 600;
+  font-weight: 700;
   font-family: Georgia, serif;
+  color: #4a3824;
+}
+
+/* Hexagram SVG */
+.hexagram-svg {
+  width: 200px;
+  height: 168px;
+}
+
+.hexagram-svg .hex-line-group {
+  cursor: default;
+}
+
+.hexagram-svg .hex-segment {
+  pointer-events: stroke;
+}
+
+.hexagram-unicode {
+  font-size: 2.75rem;
+  margin: 0;
+  color: #3d2914;
+  line-height: 1;
 }
 
 /* Results */
@@ -134,77 +243,38 @@
   to { opacity: 1; }
 }
 
-.hexagram-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(232, 228, 220, 0.1);
-}
-
-.hexagram-svg {
-  width: 180px;
-  height: 140px;
-}
-
-.hexagram-svg .brush-stroke {
-  fill: none;
-  stroke: #c9b896;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  cursor: pointer;
-  transition: stroke 0.2s;
-}
-
-.hexagram-svg .brush-stroke:hover {
-  stroke: #e8dcc8;
-}
-
-.hexagram-svg .brush-stroke.changing {
-  stroke: #b8956a;
-  stroke-width: 4;
-}
-
-.hexagram-unicode {
-  font-size: 4rem;
-  margin: 0;
-  color: #e8dcc8;
-  opacity: 0.9;
-}
-
 /* Interpretation */
 .interpretation {
-  background: rgba(232, 228, 220, 0.05);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  background: rgba(255, 252, 245, 0.55);
+  border: 1px solid rgba(80, 55, 35, 0.18);
+  border-radius: 6px;
+  padding: 1.35rem;
+  margin-bottom: 1.25rem;
+  color: #2c2416;
 }
 
 .hexagram-header h2 {
   margin: 0 0 0.25rem;
-  font-size: 1.75rem;
-  font-weight: 400;
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: #3d2914;
 }
 
 .chinese {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.1rem;
   font-size: 0.95rem;
-  opacity: 0.85;
+  color: #5c4832;
 }
 
 .overview h3,
 .lines-section h3,
 .resulting-hexagram h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 1rem 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 1rem 0 0.45rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.9;
+  letter-spacing: 0.07em;
+  color: #5c4030;
 }
 
 .overview h3:first-child,
@@ -214,110 +284,121 @@
 
 .overview p,
 .interpretation p {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.7rem;
   line-height: 1.6;
+  color: #2c2416;
 }
 
 .lines-hint {
-  font-size: 0.85rem;
-  opacity: 0.75;
+  font-size: 0.82rem;
+  color: #6b5340;
 }
 
 .line-item {
-  margin-top: 0.5rem;
-  border: 1px solid rgba(232, 228, 220, 0.12);
-  border-radius: 6px;
+  margin-top: 0.45rem;
+  border: 1px solid rgba(80, 55, 35, 0.2);
+  border-radius: 4px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .line-summary {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1rem;
+  gap: 0.65rem;
+  padding: 0.55rem 0.85rem;
   background: transparent;
   border: none;
-  color: inherit;
-  font-size: 0.95rem;
+  color: #2c2416;
+  font-size: 0.9rem;
   cursor: pointer;
   text-align: left;
 }
 
 .line-summary:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(90, 70, 45, 0.06);
 }
 
 .line-type {
   flex: 1;
   font-style: italic;
-  opacity: 0.9;
+  color: #4a3824;
 }
 
 .changing-badge {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.5rem;
-  background: rgba(184, 149, 106, 0.3);
-  border-radius: 4px;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.45rem;
+  background: rgba(139, 100, 60, 0.2);
+  border-radius: 3px;
   text-transform: uppercase;
+  color: #5c4030;
 }
 
 .line-text {
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(232, 228, 220, 0.08);
+  padding: 0.85rem;
+  background: rgba(90, 70, 45, 0.05);
+  border-top: 1px solid rgba(80, 55, 35, 0.12);
   font-style: italic;
   line-height: 1.55;
+  color: #3d2914;
 }
 
 .resulting-hexagram {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(232, 228, 220, 0.15);
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(80, 55, 35, 0.2);
 }
 
 .resulting-hexagram h4 {
-  margin: 0.5rem 0;
-  font-size: 1.25rem;
+  margin: 0.45rem 0;
+  font-size: 1.15rem;
+  color: #3d2914;
 }
 
 .attribution {
-  margin-top: 1.5rem !important;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  margin-top: 1.25rem !important;
+  font-size: 0.78rem;
+  color: #6b5340 !important;
 }
 
 .cast-again {
   display: block;
   margin: 0 auto;
-  padding: 0.6rem 1.5rem;
-  background: rgba(232, 228, 220, 0.1);
-  border: 1px solid rgba(232, 228, 220, 0.3);
-  border-radius: 6px;
-  color: #e8e4dc;
-  font-size: 0.95rem;
+  padding: 0.55rem 1.35rem;
+  background: rgba(61, 41, 20, 0.12);
+  border: 1px solid rgba(61, 41, 20, 0.35);
+  border-radius: 4px;
+  color: #3d2914;
+  font-size: 0.92rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
 }
 
 .cast-again:hover {
-  background: rgba(232, 228, 220, 0.18);
+  background: rgba(61, 41, 20, 0.2);
 }
 
 .app-footer {
   padding: 1rem;
   text-align: center;
-  font-size: 0.85rem;
-  opacity: 0.7;
+  font-size: 0.82rem;
+  color: #5c4832;
+  border-top: 1px solid rgba(60, 45, 30, 0.12);
 }
 
 @media (max-width: 480px) {
   .app-header h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
   .three-coins .coin {
-    width: 1.9rem;
-    height: 1.9rem;
+    width: 1.85rem;
+    height: 1.85rem;
     font-size: 0.9rem;
+  }
+  .hexagram-svg {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
   }
 }

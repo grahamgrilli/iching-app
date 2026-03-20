@@ -16,20 +16,19 @@ function App() {
     [7, 7, 7, 7, 7, 7] as LineValue[]
   );
 
-  const complete = true; // All 6 lines always have a value; user toggles to match their roll
   const lineValues = lines;
-  const primaryBinary = complete ? linesToBinary(lineValues) : '';
-  const resultingBinary = complete ? linesToResultingBinary(lineValues) : '';
-  const primaryNum = complete ? binaryToHexagramNumber(primaryBinary) : 0;
-  const resultingNum = complete ? binaryToHexagramNumber(resultingBinary) : 0;
+  const primaryBinary = linesToBinary(lineValues);
+  const resultingBinary = linesToResultingBinary(lineValues);
+  const primaryNum = binaryToHexagramNumber(primaryBinary);
+  const resultingNum = binaryToHexagramNumber(resultingBinary);
 
-  const primary = complete ? getHexagramByBinary(primaryBinary) : null;
+  const primary = getHexagramByBinary(primaryBinary);
   const resulting =
-    complete && primaryNum !== resultingNum
+    primaryNum !== resultingNum
       ? getHexagramByBinary(resultingBinary)
       : null;
 
-  const castAnother = () => setLines([7, 7, 7, 7, 7, 7] as LineValue[]);
+  const castAgain = () => setLines([7, 7, 7, 7, 7, 7] as LineValue[]);
 
   return (
     <div className="app">
@@ -39,37 +38,38 @@ function App() {
       </header>
 
       <main className="app-main">
-        <section className="casting-section">
-          <CoinInput
-            lines={lines}
-            onChange={setLines}
-            disabled={false}
-          />
-        </section>
-
-        {complete && primary && (
-          <section className="results-section">
-            <div className="hexagram-panel">
-              <HexagramDisplay
-                lines={lineValues}
-                onLineClick={() => {}}
-              />
+        <section className="casting-row">
+          <div className="casting-panel coin-panel">
+            <CoinInput
+              lines={lines}
+              onChange={setLines}
+              disabled={false}
+            />
+          </div>
+          <div className="casting-panel hex-panel">
+            <p className="hex-panel-label">Your hexagram</p>
+            <div className="hexagram-panel-inline">
+              <HexagramDisplay lines={lineValues} onLineClick={() => {}} />
               <p className="hexagram-unicode">{primary.unicode}</p>
             </div>
-            <Interpretation
-              primary={primary}
-              resulting={resulting}
-              lines={lineValues}
-            />
-            <button type="button" className="cast-again" onClick={castAnother}>
-              Cast again
-            </button>
-          </section>
-        )}
+            <p className="hex-panel-note">Line 1 = bottom</p>
+          </div>
+        </section>
+
+        <section className="results-section">
+          <Interpretation
+            primary={primary}
+            resulting={resulting}
+            lines={lineValues}
+          />
+          <button type="button" className="cast-again" onClick={castAgain}>
+            Cast again
+          </button>
+        </section>
       </main>
 
       <footer className="app-footer">
-        <p>Focus on your question. Record each coin toss from bottom to top.</p>
+        <p>Record each toss to match your physical coins. Changing yin shows an ✕ between segments; changing yang shows a ○ on the line.</p>
       </footer>
     </div>
   );

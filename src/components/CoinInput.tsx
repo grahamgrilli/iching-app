@@ -1,11 +1,25 @@
 import type { LineValue } from '../lib/cast';
 
-const LEGEND = (
-  <div className="coin-legend">
-    <span>Heads=3, Tails=2</span>
-    <span>6=○○○ 7=●○○ 8=●●○ 9=●●●</span>
-  </div>
-);
+function CoinKey() {
+  return (
+    <div className="coin-key" aria-label="Coin symbols">
+      <div className="coin-key-row">
+        <span className="coin-key-sample tails" aria-hidden>○</span>
+        <span>Tails (empty ring)</span>
+      </div>
+      <div className="coin-key-row">
+        <span className="coin-key-sample heads" aria-hidden>●</span>
+        <span>Heads (filled)</span>
+      </div>
+      <div className="coin-key-row muted">
+        <span>Heads = 3 · Tails = 2</span>
+      </div>
+      <div className="coin-key-row muted small">
+        <span>Values: 6 = ○○○ · 7 = ●○○ · 8 = ●●○ · 9 = ●●●</span>
+      </div>
+    </div>
+  );
+}
 
 function ThreeCoins({
   value,
@@ -16,7 +30,6 @@ function ThreeCoins({
   onChange: (v: LineValue) => void;
   disabled?: boolean;
 }) {
-  // value 6=0H, 7=1H, 8=2H, 9=3H
   const heads = value === 6 ? 0 : value === 7 ? 1 : value === 8 ? 2 : 3;
 
   const toggle = (i: number) => {
@@ -38,7 +51,7 @@ function ThreeCoins({
           className={`coin ${i < heads ? 'heads' : 'tails'}`}
           onClick={() => toggle(i)}
           disabled={disabled}
-          aria-label={i < heads ? 'Heads' : 'Tails'}
+          aria-label={i < heads ? 'Heads (filled)' : 'Tails (empty)'}
         >
           {i < heads ? '●' : '○'}
         </button>
@@ -62,16 +75,19 @@ export default function CoinInput({
     onChange(next);
   };
 
+  // Visual order: line 6 at top, line 1 at bottom (matches hexagram)
+  const displayOrder = [5, 4, 3, 2, 1, 0] as const;
+
   return (
     <div className="coin-input">
       <p className="coin-instruction">
-        Focus on your question. Toss your coins six times (bottom to top), then record each toss below.
+        Focus on your question. Toss six times <strong>bottom to top</strong> — line <strong>1</strong> is the <strong>bottom</strong> row here.
       </p>
-      {LEGEND}
+      <CoinKey />
       <div className="line-inputs">
-        {[0, 1, 2, 3, 4, 5].map((idx) => (
+        {displayOrder.map((idx) => (
           <div key={idx} className="line-row">
-            <span className="line-label">Line {idx + 1}</span>
+            <span className="line-label">#{idx + 1}</span>
             <ThreeCoins
               value={lines[idx]}
               onChange={(v) => updateLine(idx, v)}
