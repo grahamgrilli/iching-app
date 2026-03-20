@@ -1,8 +1,10 @@
 /**
- * I Ching three-coin method (classical scoring)
- * Each ● = 3, each ○ = 2
- * 6 = ○○○ old yin (changing) · 7 = ●○○ young yang · 8 = ●●○ young yin · 9 = ●●● old yang (changing)
- * Line type for hexagram: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches Wilhelm/books.
+ * I Ching three-coin method
+ * Each ● (heads) = 2, each ○ (tails) = 3 — so “more heads → yang”, “more tails → yin”, matching common intuition.
+ * 6 = ●●● old yin (changing) · 7 = ●●○ young yang · 8 = ●○○ young yin · 9 = ○○○ old yang (changing)
+ * Line type for hexagram: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches Wilhelm / King Wen lookup.
+ *
+ * Note: Some books use ●=3, ○=2 instead; that inverts which toss (2H vs 2T) gives 7 vs 8. We use ●=2, ○=3 here.
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -21,10 +23,10 @@ export function isChanging(value: LineValue): boolean {
   return value === 6 || value === 9;
 }
 
-/** Number of filled coins (●); each ● = 3, each ○ = 2 */
+/** Number of heads (●); each ● = 2, each ○ = 3 → sum 6–9 */
 export function coinsToLine(heads: number): LineValue {
   const tails = 3 - heads;
-  const sum = heads * 3 + tails * 2;
+  const sum = heads * 2 + tails * 3;
   return sum as LineValue;
 }
 

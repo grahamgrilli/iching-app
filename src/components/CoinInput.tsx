@@ -12,10 +12,12 @@ function CoinKey() {
         <span>Heads (filled)</span>
       </div>
       <div className="coin-key-row muted">
-        <span>Each ● = 3 · each ○ = 2 (add the three coins → total 6–9)</span>
+        <span>Each ● (heads) = 2 · each ○ (tails) = 3 (add the three coins → total 6–9)</span>
       </div>
       <div className="coin-key-row muted small">
-        <span>6 = ○○○ · 7 = ●○○ (young yang, unbroken) · 8 = ●●○ (young yin, broken) · 9 = ●●●</span>
+        <span>
+          6 = ●●● (old yin) · 7 = ●●○ (young yang, solid) · 8 = ●○○ (young yin, broken) · 9 = ○○○ (old yang)
+        </span>
       </div>
     </div>
   );
@@ -30,8 +32,8 @@ function ThreeCoins({
   onChange: (v: LineValue) => void;
   disabled?: boolean;
 }) {
-  // ●=3 ○=2 → 0●=6, 1●=7, 2●=8, 3●=9
-  const heads = value - 6;
+  // ●=2 ○=3 → sum = 9 − h where h = head count: h=3→6, h=2→7, h=1→8, h=0→9
+  const heads = 9 - value;
 
   const toggle = (i: number) => {
     if (disabled) return;
@@ -39,7 +41,7 @@ function ThreeCoins({
     if (i < heads) newHeads = heads - 1;
     else newHeads = heads + 1;
     newHeads = Math.max(0, Math.min(3, newHeads));
-    const sum = newHeads * 3 + (3 - newHeads) * 2;
+    const sum = newHeads * 2 + (3 - newHeads) * 3;
     onChange(sum as LineValue);
   };
 
