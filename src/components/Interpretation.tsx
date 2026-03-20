@@ -51,6 +51,14 @@ export default function Interpretation({
   return (
     <div className="interpretation">
       <div className="hexagram-header">
+        <p className="hexagram-number-row">
+          <span className="hexagram-number-badge" title="King Wen sequence (1–64), same as most I Ching books">
+            No. {primary.number}
+          </span>
+          <span className="hexagram-number-note">
+            King Wen order (1–64), same numbering as most books and Wilhelm/Baynes indexes.
+          </span>
+        </p>
         <h2>{primary.name}</h2>
         <p className="chinese">{primary.chinese} — {primary.pinyin}</p>
       </div>
@@ -125,7 +133,12 @@ export default function Interpretation({
         <div className="resulting-hexagram">
           <h3>Transformation</h3>
           <p>With changing lines, the situation transforms toward:</p>
-          <h4>{resulting.name}</h4>
+          <h4>
+            <span className="hexagram-number-badge hexagram-number-badge--sm">
+              No. {resulting.number}
+            </span>{' '}
+            {resulting.name}
+          </h4>
           <p className="chinese">{resulting.chinese} — {resulting.pinyin}</p>
           <p className="judgement">{resultingJudgement}</p>
         </div>

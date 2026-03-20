@@ -54,6 +54,9 @@ function App() {
             <div className="hexagram-panel-inline">
               <HexagramDisplay lines={lineValues} onLineClick={() => {}} />
               <p className="hexagram-unicode">{primary.unicode}</p>
+              <p className="hex-panel-number" title="King Wen order (1–64)">
+                No. {primary.number}
+              </p>
             </div>
             <p className="hex-panel-note">Line 1 = bottom</p>
           </div>

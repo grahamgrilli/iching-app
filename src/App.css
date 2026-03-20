@@ -285,6 +285,15 @@
   line-height: 1;
 }
 
+.hex-panel-number {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--color-earth);
+}
+
 /* Results */
 .results-section {
   animation: fadeIn 0.55s ease;
@@ -312,6 +321,44 @@
   box-shadow:
     4px 4px 0 var(--color-ink),
     8px 8px 0 rgba(26, 26, 26, 0.06);
+}
+
+.hexagram-number-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem 1rem;
+  margin: 0 0 0.75rem;
+}
+
+.hexagram-number-badge {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-ink);
+  padding: 0.35rem 0.65rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: rgba(245, 241, 230, 0.9);
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.hexagram-number-badge--sm {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 1px 1px 0 var(--color-ink);
+  margin-right: 0.15rem;
+  vertical-align: middle;
+}
+
+.hexagram-number-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--color-ink-muted);
+  max-width: 20rem;
+  line-height: 1.35;
 }
 
 .hexagram-header h2 {
@@ -490,6 +537,7 @@
   font-weight: 400;
   letter-spacing: 0.03em;
   color: var(--color-ink);
+  line-height: 1.35;
 }
 
 .attribution {
