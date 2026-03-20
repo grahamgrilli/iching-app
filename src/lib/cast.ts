@@ -1,7 +1,8 @@
 /**
- * I Ching casting logic - Three-coin method
- * Heads = 3, Tails = 2
- * Sum: 6 (TTT) = Old Yin (changing), 7 (HTT) = Young Yang, 8 (HHT) = Young Yin, 9 (HHH) = Old Yang (changing)
+ * I Ching three-coin method (classical scoring)
+ * Filled ● = 3 (yang / "heads"), empty ○ = 2 (yin / "tails")
+ * Sum: 6 (○○○) = old yin — changing; 7 = young yang; 8 = young yin; 9 (●●●) = old yang — changing
+ * "Old" (6,9) = line is at an extreme and changes; not the opposite of "strong"
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -20,7 +21,7 @@ export function isChanging(value: LineValue): boolean {
   return value === 6 || value === 9;
 }
 
-/** Convert coin flip to line: heads=3, tails=2. Sum of 3 coins = 6,7,8,9 */
+/** Number of filled coins (●); each ● = 3, each ○ = 2 */
 export function coinsToLine(heads: number): LineValue {
   const tails = 3 - heads;
   const sum = heads * 3 + tails * 2;
