@@ -24,17 +24,12 @@ npm run build
 
 ## Deploy to GitHub Pages
 
-1. Create a repository named `iching-app` (or your choice) on GitHub
-2. Update `vite.config.ts` — set `base` to `'/${your-repo-name}/'`
-3. Update `package.json` — set `homepage` to `https://YOUR_USERNAME.github.io/${your-repo-name}/`
-4. Install gh-pages and deploy:
+Matches Morning-Charge-Up: **main** branch. (Morning-Charge-Up uses root; this app builds to **docs/**.)
 
-```bash
-npm install --save-dev gh-pages
-npm run deploy
-```
-
-5. In your repo Settings → Pages, set source to the `gh-pages` branch
+1. Run `npm run deploy` to build into `docs/`
+2. Commit and push: `git add docs && git commit -m "Deploy" && git push`
+3. In repo **Settings → Pages**: Branch **main**, Folder **/docs**
+4. Site: **https://grahamgrilli.github.io/iching-app/**
 
 ## Data
 
