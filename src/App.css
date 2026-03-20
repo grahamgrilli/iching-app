@@ -1,0 +1,323 @@
+/* Hokusai-inspired I Ching */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    180deg,
+    #1a2744 0%,
+    #2d3a5a 20%,
+    #3d4a6e 40%,
+    #2a3548 70%,
+    #1e2a3d 100%
+  );
+  color: #e8e4dc;
+}
+
+.app-header {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin: 0;
+  color: #f0ebe3;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 2rem;
+  width: 100%;
+}
+
+/* Coin input */
+.casting-section {
+  background: rgba(232, 228, 220, 0.06);
+  border: 1px solid rgba(232, 228, 220, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.coin-instruction {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.coin-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 1.25rem;
+}
+
+.line-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.line-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.line-label {
+  flex: 0 0 4rem;
+  font-size: 0.9rem;
+}
+
+.three-coins {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.coin {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 228, 220, 0.4);
+  background: rgba(45, 58, 90, 0.6);
+  color: #c9b896;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.coin:hover:not(:disabled) {
+  background: rgba(60, 75, 110, 0.8);
+  border-color: rgba(232, 228, 220, 0.6);
+}
+
+.coin.heads {
+  background: rgba(180, 140, 100, 0.4);
+  border-color: rgba(201, 184, 150, 0.6);
+  color: #e8dcc8;
+}
+
+.line-value {
+  flex: 1;
+  text-align: right;
+  font-weight: 600;
+  font-family: Georgia, serif;
+}
+
+/* Results */
+.results-section {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hexagram-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(232, 228, 220, 0.1);
+}
+
+.hexagram-svg {
+  width: 180px;
+  height: 140px;
+}
+
+.hexagram-svg .brush-stroke {
+  fill: none;
+  stroke: #c9b896;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: stroke 0.2s;
+}
+
+.hexagram-svg .brush-stroke:hover {
+  stroke: #e8dcc8;
+}
+
+.hexagram-svg .brush-stroke.changing {
+  stroke: #b8956a;
+  stroke-width: 4;
+}
+
+.hexagram-unicode {
+  font-size: 4rem;
+  margin: 0;
+  color: #e8dcc8;
+  opacity: 0.9;
+}
+
+/* Interpretation */
+.interpretation {
+  background: rgba(232, 228, 220, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hexagram-header h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.chinese {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.overview h3,
+.lines-section h3,
+.resulting-hexagram h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+.overview h3:first-child,
+.lines-section h3:first-child {
+  margin-top: 0;
+}
+
+.overview p,
+.interpretation p {
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+}
+
+.lines-hint {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.line-item {
+  margin-top: 0.5rem;
+  border: 1px solid rgba(232, 228, 220, 0.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.line-summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.line-summary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.line-type {
+  flex: 1;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.changing-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(184, 149, 106, 0.3);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.line-text {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(232, 228, 220, 0.08);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.resulting-hexagram {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(232, 228, 220, 0.15);
+}
+
+.resulting-hexagram h4 {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.attribution {
+  margin-top: 1.5rem !important;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.cast-again {
+  display: block;
+  margin: 0 auto;
+  padding: 0.6rem 1.5rem;
+  background: rgba(232, 228, 220, 0.1);
+  border: 1px solid rgba(232, 228, 220, 0.3);
+  border-radius: 6px;
+  color: #e8e4dc;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cast-again:hover {
+  background: rgba(232, 228, 220, 0.18);
+}
+
+.app-footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  .three-coins .coin {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.9rem;
+  }
+}
