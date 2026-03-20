@@ -8,7 +8,7 @@ function HexLine({
   value: LineValue;
   onClick?: () => void;
 }) {
-  const isYang = value === 7 || value === 9;
+  const isYang = value === 8 || value === 9;
   const isOld = value === 6 || value === 9;
   const stroke = '#3d2914';
   const strokeW = 3.5;

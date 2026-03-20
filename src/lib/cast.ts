@@ -1,8 +1,8 @@
 /**
  * I Ching three-coin method (classical scoring)
  * Filled ● = 3 (yang / "heads"), empty ○ = 2 (yin / "tails")
- * Sum: 6 (○○○) = old yin — changing; 7 = young yang; 8 = young yin; 9 (●●●) = old yang — changing
- * "Old" (6,9) = line is at an extreme and changes; not the opposite of "strong"
+ * Sum: 6 (○○○) = old yin — changing; 7 = one ●; 8 = two ●; 9 (●●●) = old yang — changing
+ * For drawing + hexagram binary we treat 7 as yin (broken) and 8 as yang (solid): majority ● → unbroken line.
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -11,8 +11,8 @@ export type LineType = 'old-yin' | 'young-yang' | 'young-yin' | 'old-yang';
 export function getLineType(value: LineValue): LineType {
   switch (value) {
     case 6: return 'old-yin';
-    case 7: return 'young-yang';
-    case 8: return 'young-yin';
+    case 7: return 'young-yin';
+    case 8: return 'young-yang';
     case 9: return 'old-yang';
   }
 }
@@ -28,9 +28,9 @@ export function coinsToLine(heads: number): LineValue {
   return sum as LineValue;
 }
 
-/** Line value to yin (0) or yang (1) for binary lookup. 6,8 = yin; 7,9 = yang */
+/** Yin/yang for hexagram: 6,7 = yin; 8,9 = yang (matches line drawing: one ● = broken, two ● = solid). */
 export function lineToBinary(value: LineValue): 0 | 1 {
-  return (value === 7 || value === 9) ? 1 : 0;
+  return (value === 8 || value === 9) ? 1 : 0;
 }
 
 /** When changing: 6 (old yin) -> yang (1), 9 (old yang) -> yin (0) */

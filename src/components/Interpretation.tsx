@@ -5,8 +5,8 @@ import { isChanging } from '../lib/cast';
 
 const LINE_LABELS: Record<LineValue, string> = {
   6: 'Strong Yin — Changing',
-  7: 'Young Yang',
-  8: 'Young Yin',
+  7: 'Young Yin (one ●)',
+  8: 'Young Yang (two ●)',
   9: 'Strong Yang — Changing',
 };
 
