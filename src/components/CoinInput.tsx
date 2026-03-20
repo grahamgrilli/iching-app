@@ -53,7 +53,13 @@ function ThreeCoins({
           key={i}
           type="button"
           className={`coin ${i < heads ? 'heads' : 'tails'}`}
-          onClick={() => toggle(i)}
+          onClick={(e) => {
+            toggle(i);
+            // iOS/Android can leave a “hover” or focus state that paints over ●/○ until another tap
+            if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+              (e.currentTarget as HTMLButtonElement).blur();
+            }
+          }}
           disabled={disabled}
           aria-label={i < heads ? 'Heads (filled)' : 'Tails (empty)'}
         >

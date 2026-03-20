@@ -5,6 +5,7 @@
 
 import wilhelmLines from './wilhelmLines.json';
 import clearyInterpretations from './clearyInterpretations.json';
+import soberJudgementNotes from './soberJudgementNotes.json';
 
 export interface HexagramData {
   number: number;
@@ -136,6 +137,12 @@ export function getTaoistIChingInterpretation(
   number: number
 ): TaoistInterpretationBlock | undefined {
   return clearyByHex[String(number)];
+}
+
+/** Even-handed gloss: friction, limits, shadows—pairs with condensed Wilhelm judgment. */
+export function getSoberJudgementNote(number: number): string {
+  const row = soberJudgementNotes as Record<string, string>;
+  return row[String(number)] ?? '';
 }
 
 const BINARY_TO_NUMBER: Record<string, number> = {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { LineValue } from '../lib/cast';
 import type { HexagramData } from '../data/hexagrams';
-import { getTaoistIChingInterpretation } from '../data/hexagrams';
+import { getTaoistIChingInterpretation, getSoberJudgementNote } from '../data/hexagrams';
 import { isChanging } from '../lib/cast';
 
 type TranslationSource = 'wilhelm' | 'taoist';
@@ -47,6 +47,10 @@ export default function Interpretation({
     showWilhelm
       ? resulting?.judgement
       : (taoistResulting?.judgement ?? resulting?.judgement);
+
+  const soberPrimary = getSoberJudgementNote(primary.number);
+  const soberResulting =
+    resulting != null ? getSoberJudgementNote(resulting.number) : '';
 
   return (
     <div className="interpretation">
@@ -95,6 +99,21 @@ export default function Interpretation({
       <div className="overview">
         <h3>Judgement</h3>
         <p>{judgementText}</p>
+        {showWilhelm && (
+          <p className="wilhelm-diction-note">
+            Wilhelm/Baynes often uses words like <em>success</em> or <em>good fortune</em> because they mirror
+            classical oracle phrasing—they are not modern “everything is fine” reassurance. The{' '}
+            <strong>plain read</strong> below names tension and limits for this hexagram.
+          </p>
+        )}
+        {!showWilhelm && (
+          <p className="wilhelm-diction-note">
+            Taoist-tab summaries are short app-written glosses and can read upbeat; use the{' '}
+            <strong>plain read</strong> and Wilhelm tab for a starker view of the same figure.
+          </p>
+        )}
+        <h3>Plain read</h3>
+        <p className="sober-read">{soberPrimary}</p>
         <h3>Image</h3>
         <p>{imageText}</p>
       </div>
@@ -141,13 +160,19 @@ export default function Interpretation({
           </h4>
           <p className="chinese">{resulting.chinese} — {resulting.pinyin}</p>
           <p className="judgement">{resultingJudgement}</p>
+          {soberResulting && (
+            <>
+              <h4 className="transformation-subheading">Plain read (resulting)</h4>
+              <p className="sober-read">{soberResulting}</p>
+            </>
+          )}
         </div>
       )}
 
       <p className="attribution">
         {showWilhelm
-          ? 'Judgement and Image are shortened Wilhelm/Baynes. Line texts are the full Wilhelm/Baynes translation per line. Three-coin method uses ●=3 and ○=2 (three tails → 6, three heads → 9); hexagram lookup matches King Wen order.'
-          : 'Taoist I Ching tab uses bundled original summaries (not Cleary’s published wording). Wilhelm/Baynes remains available on the first tab.'}
+          ? 'Judgement and Image are shortened Wilhelm/Baynes. “Plain read” is an app-written balance note (not Wilhelm). Line texts are full Wilhelm/Baynes per line. Three-coin: ●=3, ○=2; King Wen numbering.'
+          : 'Taoist tab: bundled original summaries. Plain read + Wilhelm tab give a cooler assessment. Line texts on Wilhelm tab remain full Wilhelm/Baynes.'}
       </p>
     </div>
   );
