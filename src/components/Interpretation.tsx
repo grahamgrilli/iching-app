@@ -133,7 +133,7 @@ export default function Interpretation({
 
       <p className="attribution">
         {showWilhelm
-          ? 'Judgement and Image are shortened Wilhelm/Baynes. Line texts are the full Wilhelm/Baynes translation per line. Three-coin totals use ●=2 and ○=3 so two heads gives young yang (7) and two tails gives young yin (8), matching most physical toss intuition; hexagram lookup matches King Wen order.'
+          ? 'Judgement and Image are shortened Wilhelm/Baynes. Line texts are the full Wilhelm/Baynes translation per line. Three-coin method uses ●=3 and ○=2 (three tails → 6, three heads → 9); hexagram lookup matches King Wen order.'
           : 'Taoist I Ching tab uses bundled original summaries (not Cleary’s published wording). Wilhelm/Baynes remains available on the first tab.'}
       </p>
     </div>

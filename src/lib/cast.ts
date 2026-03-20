@@ -1,10 +1,10 @@
 /**
- * I Ching three-coin method
- * Each ● (heads) = 2, each ○ (tails) = 3 — so “more heads → yang”, “more tails → yin”, matching common intuition.
- * 6 = ●●● old yin (changing) · 7 = ●●○ young yang · 8 = ●○○ young yin · 9 = ○○○ old yang (changing)
- * Line type for hexagram: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches Wilhelm / King Wen lookup.
+ * I Ching three-coin method (Wilhelm-style convention)
+ * Each ● (heads) = 3, each ○ (tails) = 2
+ * 6 = ○○○ old yin (changing) · 7 = ●○○ young yang · 8 = ●●○ young yin · 9 = ●●● old yang (changing)
+ * Line type: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches standard charts / King Wen lookup.
  *
- * Note: Some books use ●=3, ○=2 instead; that inverts which toss (2H vs 2T) gives 7 vs 8. We use ●=2, ○=3 here.
+ * Some teachers use ●=2, ○=3 instead (same 6–9 meanings, but 2H/2T swap which total is 7 vs 8).
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -23,10 +23,10 @@ export function isChanging(value: LineValue): boolean {
   return value === 6 || value === 9;
 }
 
-/** Number of heads (●); each ● = 2, each ○ = 3 → sum 6–9 */
+/** Number of heads (●); each ● = 3, each ○ = 2 → sum 6–9 */
 export function coinsToLine(heads: number): LineValue {
   const tails = 3 - heads;
-  const sum = heads * 2 + tails * 3;
+  const sum = heads * 3 + tails * 2;
   return sum as LineValue;
 }
 
