@@ -3,14 +3,14 @@
 }
 
 :root {
-  --color-bg: #e8e2d4;
-  --color-ink: #141414;
-  --color-earth: #4a362c;
-  --color-cream: #f5f1e6;
-  --color-ink-muted: rgba(20, 20, 20, 0.72);
-  --color-heading: #2a211c;
+  --color-bg: #e8e6e0;
+  --color-ink: #0f1419;
+  --color-cream: #f7f6f2;
+  --color-ink-muted: rgba(15, 20, 25, 0.68);
+  --color-heading: #1a2838;
+  --color-accent: #2c4a6e;
   --font-display: 'Prata', 'Times New Roman', serif;
-  --font-body: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-label: 'Cinzel', Georgia, serif;
   font-family: var(--font-body);
   font-size: 18px;
@@ -30,7 +30,7 @@ body {
 }
 
 button {
-  font-family: var(--font-label);
+  font-family: var(--font-body);
 }
 
 code,

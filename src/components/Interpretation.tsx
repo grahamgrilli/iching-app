@@ -86,16 +86,11 @@ export default function Interpretation({
         </TranslationStanza>
 
         <h3>Plain read</h3>
-        <p className="sober-read">{soberPrimary}</p>
+        <div className="plain-read-card">
+          <p className="sober-read">{soberPrimary}</p>
+        </div>
 
         <h3>Image</h3>
-        <p className="image-gloss">
-          Each hexagram is drawn as two three-line halves (below and above). The <em>Image</em> names those halves as
-          familiar things from nature—water, thunder, mountain, fire, and so on—stacked into one picture (for example
-          “water on the mountain”). That picture is a metaphor for what kind of situation this is. The second sentence
-          usually begins “Thus the superior man…” and gives practical or moral guidance: what to cultivate, how to act,
-          or what to avoid. It’s not a second prediction; it turns the picture into behavior you can try.
-        </p>
         <TranslationStanza title="Wilhelm / Baynes">
           <p>{primary.image}</p>
         </TranslationStanza>
@@ -167,7 +162,9 @@ export default function Interpretation({
           {soberResulting && (
             <>
               <h4 className="transformation-subheading">Plain read</h4>
-              <p className="sober-read">{soberResulting}</p>
+              <div className="plain-read-card">
+                <p className="sober-read">{soberResulting}</p>
+              </div>
             </>
           )}
 
