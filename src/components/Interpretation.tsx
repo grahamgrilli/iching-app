@@ -98,8 +98,12 @@ export default function Interpretation({
         <p className="sober-read">{soberPrimary}</p>
         <h3>Image</h3>
         <p className="image-gloss">
-          In the classical text, the <em>Image</em> is the symbolic picture made by the two trigrams (e.g. thunder over
-          water), followed by counsel for attitude and conduct—how to meet the situation described in the Judgement.
+          Each hexagram is drawn as two three-line halves (below and above). The <em>Image</em> names those halves as
+          familiar things from nature—water, thunder, mountain, fire, and so on—stacked into one picture (for example
+          “water on the mountain”). That picture is a <strong>metaphor for what kind of situation this is</strong>. The
+          second sentence usually begins “Thus the superior man…” and gives <strong>practical or moral guidance</strong>:
+          what to cultivate, how to act, or what to avoid. It’s not a second prediction; it turns the picture into
+          behavior you can try.
         </p>
         <p>{imageText}</p>
       </div>
