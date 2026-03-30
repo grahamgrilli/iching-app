@@ -485,6 +485,13 @@
   color: var(--color-ink-muted);
 }
 
+.image-gloss {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+  margin-bottom: 0.65rem !important;
+}
+
 .line-item {
   margin-top: 0.5rem;
   border: 1.5px solid rgba(26, 26, 26, 0.18);

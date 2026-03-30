@@ -13,6 +13,9 @@ const LINE_LABELS: Record<LineValue, string> = {
   9: 'Old Yang — Changing',
 };
 
+/** Top to bottom: line 6 … line 1 — matches hexagram drawing and coin rows */
+const LINE_DISPLAY_ORDER: readonly number[] = [5, 4, 3, 2, 1, 0];
+
 export default function Interpretation({
   primary,
   resulting,
@@ -94,14 +97,20 @@ export default function Interpretation({
         <h3>Plain read</h3>
         <p className="sober-read">{soberPrimary}</p>
         <h3>Image</h3>
+        <p className="image-gloss">
+          In the classical text, the <em>Image</em> is the symbolic picture made by the two trigrams (e.g. thunder over
+          water), followed by counsel for attitude and conduct—how to meet the situation described in the Judgement.
+        </p>
         <p>{imageText}</p>
       </div>
 
       <div className="lines-section">
         <h3>Lines</h3>
-        <p className="lines-hint">Click a line to see its interpretation</p>
+        <p className="lines-hint">Top = line 6, bottom = line 1 (same order as the coins and hexagram). Click to expand.</p>
         <div className="line-details">
-          {lines.map((val, i) => (
+          {LINE_DISPLAY_ORDER.map((i) => {
+            const val = lines[i];
+            return (
             <div
               key={i}
               className={`line-item ${expandedLine === i ? 'expanded' : ''}`}
@@ -119,7 +128,8 @@ export default function Interpretation({
                 <div className="line-text">{lineBody(i)}</div>
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
