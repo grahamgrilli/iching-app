@@ -139,7 +139,7 @@ export function getTaoistIChingInterpretation(
   return clearyByHex[String(number)];
 }
 
-/** Even-handed gloss: friction, limits, shadows—pairs with condensed Wilhelm judgment. */
+/** Plain-language gloss for the hexagram (app text; pairs with the active Judgement source). */
 export function getSoberJudgementNote(number: number): string {
   const row = soberJudgementNotes as Record<string, string>;
   return row[String(number)] ?? '';
