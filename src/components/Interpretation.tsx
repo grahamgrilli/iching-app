@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import type { LineValue } from '../lib/cast';
 import type { HexagramData } from '../data/hexagrams';
-import { getTaoistIChingInterpretation, getSoberJudgementNote } from '../data/hexagrams';
+import { getConfucianCommentary, getSoberJudgementNote } from '../data/hexagrams';
 import { isChanging } from '../lib/cast';
 
 const LINE_LABELS: Record<LineValue, string> = {
@@ -41,19 +41,19 @@ export default function Interpretation({
   const [expandedLine, setExpandedLine] = useState<number | null>(null);
   const hasChanging = lines.some(isChanging);
 
-  const taoistPrimary = getTaoistIChingInterpretation(primary.number);
-  const taoistResulting =
-    resulting != null ? getTaoistIChingInterpretation(resulting.number) : undefined;
+  const confucianPrimary = getConfucianCommentary(primary.number);
+  const confucianResulting =
+    resulting != null ? getConfucianCommentary(resulting.number) : undefined;
 
-  const taoistJudgement = (t: typeof taoistPrimary) =>
+  const confucianJudgement = (t: typeof confucianPrimary) =>
     t?.judgement && t.judgement.trim().length > 0 ? t.judgement : '—';
-  const taoistImage = (t: typeof taoistPrimary) =>
+  const confucianImage = (t: typeof confucianPrimary) =>
     t?.image && t.image.trim().length > 0 ? t.image : '—';
 
   const wilhelmLineText = (lineIndex: number) =>
     primary.lines[(lineIndex + 1) as 1 | 2 | 3 | 4 | 5 | 6]?.text ?? '—';
-  const taoistLineText = (lineIndex: number) => {
-    const t = taoistPrimary?.lines?.[String(lineIndex + 1)];
+  const confucianLineText = (lineIndex: number) => {
+    const t = confucianPrimary?.lines?.[String(lineIndex + 1)];
     return t && t.trim().length > 0 ? t : '—';
   };
 
@@ -81,8 +81,8 @@ export default function Interpretation({
         <TranslationStanza title="Wilhelm / Baynes">
           <p>{primary.judgement}</p>
         </TranslationStanza>
-        <TranslationStanza title="Taoist I Ching">
-          <p>{taoistJudgement(taoistPrimary)}</p>
+        <TranslationStanza title="Confucian (Legge)">
+          <p>{confucianJudgement(confucianPrimary)}</p>
         </TranslationStanza>
 
         <h3>Plain read</h3>
@@ -94,8 +94,8 @@ export default function Interpretation({
         <TranslationStanza title="Wilhelm / Baynes">
           <p>{primary.image}</p>
         </TranslationStanza>
-        <TranslationStanza title="Taoist I Ching">
-          <p>{taoistImage(taoistPrimary)}</p>
+        <TranslationStanza title="Confucian (Legge)">
+          <p>{confucianImage(confucianPrimary)}</p>
         </TranslationStanza>
       </div>
 
@@ -126,8 +126,8 @@ export default function Interpretation({
                     <TranslationStanza title="Wilhelm / Baynes">
                       <p className="line-reading">{wilhelmLineText(i)}</p>
                     </TranslationStanza>
-                    <TranslationStanza title="Taoist I Ching">
-                      <p className="line-reading">{taoistLineText(i)}</p>
+                    <TranslationStanza title="Confucian (Legge)">
+                      <p className="line-reading">{confucianLineText(i)}</p>
                     </TranslationStanza>
                   </div>
                 )}
@@ -155,8 +155,8 @@ export default function Interpretation({
           <TranslationStanza title="Wilhelm / Baynes">
             <p>{resulting.judgement}</p>
           </TranslationStanza>
-          <TranslationStanza title="Taoist I Ching">
-            <p>{taoistJudgement(taoistResulting)}</p>
+          <TranslationStanza title="Confucian (Legge)">
+            <p>{confucianJudgement(confucianResulting)}</p>
           </TranslationStanza>
 
           {soberResulting && (
@@ -172,8 +172,8 @@ export default function Interpretation({
           <TranslationStanza title="Wilhelm / Baynes">
             <p>{resulting.image}</p>
           </TranslationStanza>
-          <TranslationStanza title="Taoist I Ching">
-            <p>{taoistImage(taoistResulting)}</p>
+          <TranslationStanza title="Confucian (Legge)">
+            <p>{confucianImage(confucianResulting)}</p>
           </TranslationStanza>
         </div>
       )}

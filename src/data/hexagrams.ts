@@ -4,7 +4,7 @@
  */
 
 import wilhelmLines from './wilhelmLines.json';
-import clearyInterpretations from './clearyInterpretations.json';
+import confucianCommentaries from './confucianCommentaries.json';
 import soberJudgementNotes from './soberJudgementNotes.json';
 
 export interface HexagramData {
@@ -19,16 +19,16 @@ export interface HexagramData {
   lines: Record<1 | 2 | 3 | 4 | 5 | 6, { text: string; comment?: string }>;
 }
 
-/** Taoist-oriented text (see README: not Thomas Cleary’s copyrighted book) */
-export interface TaoistInterpretationBlock {
+/** Appendix I (Tuan Zhuan) + Appendix II (Great Symbolism + line), James Legge (public domain). */
+export interface ConfucianCommentaryBlock {
   judgement: string;
   image: string;
   lines: Record<string, string>;
 }
 
-type ClearyFile = Record<string, TaoistInterpretationBlock>;
+type ConfucianFile = Record<string, ConfucianCommentaryBlock>;
 
-const clearyByHex = clearyInterpretations as ClearyFile;
+const confucianByHex = confucianCommentaries as ConfucianFile;
 
 // Full hexagram database - truncated for brevity; will include key hexagrams
 // Source: Wilhelm/Baynes (iching-wilhelm-dataset, MIT)
@@ -129,14 +129,11 @@ export function getHexagramByBinary(binary: string): HexagramData {
   return getHexagram(num ?? 1);
 }
 
-/**
- * Taoist I Ching–oriented text (Liu Yiming / Cleary tradition in spirit).
- * Bundled copy is original summary material—not Thomas Cleary’s copyrighted wording.
- */
-export function getTaoistIChingInterpretation(
+/** Confucian-layer commentaries (Ten Wings excerpts via Legge). */
+export function getConfucianCommentary(
   number: number
-): TaoistInterpretationBlock | undefined {
-  return clearyByHex[String(number)];
+): ConfucianCommentaryBlock | undefined {
+  return confucianByHex[String(number)];
 }
 
 /** Plain-language gloss for the hexagram (app text; pairs with the active Judgement source). */
