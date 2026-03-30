@@ -4,7 +4,6 @@
  */
 
 import wilhelmLines from './wilhelmLines.json';
-import confucianCommentaries from './confucianCommentaries.json';
 import soberJudgementNotes from './soberJudgementNotes.json';
 
 export interface HexagramData {
@@ -18,17 +17,6 @@ export interface HexagramData {
   image: string;
   lines: Record<1 | 2 | 3 | 4 | 5 | 6, { text: string; comment?: string }>;
 }
-
-/** Appendix I (Tuan Zhuan) + Appendix II (Great Symbolism + line), James Legge (public domain). */
-export interface ConfucianCommentaryBlock {
-  judgement: string;
-  image: string;
-  lines: Record<string, string>;
-}
-
-type ConfucianFile = Record<string, ConfucianCommentaryBlock>;
-
-const confucianByHex = confucianCommentaries as ConfucianFile;
 
 // Full hexagram database - truncated for brevity; will include key hexagrams
 // Source: Wilhelm/Baynes (iching-wilhelm-dataset, MIT)
@@ -127,13 +115,6 @@ export function getHexagramByBinary(binary: string): HexagramData {
   const padded = binary.padStart(6, '0');
   const num = BINARY_TO_NUMBER[padded];
   return getHexagram(num ?? 1);
-}
-
-/** Confucian-layer commentaries (Ten Wings excerpts via Legge). */
-export function getConfucianCommentary(
-  number: number
-): ConfucianCommentaryBlock | undefined {
-  return confucianByHex[String(number)];
 }
 
 /** Plain-language gloss for the hexagram (app text; pairs with the active Judgement source). */

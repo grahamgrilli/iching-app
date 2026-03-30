@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import type { LineValue } from '../lib/cast';
 import type { HexagramData } from '../data/hexagrams';
-import { getConfucianCommentary, getSoberJudgementNote } from '../data/hexagrams';
+import { getSoberJudgementNote } from '../data/hexagrams';
 import { isChanging } from '../lib/cast';
 
 const LINE_LABELS: Record<LineValue, string> = {
@@ -41,21 +41,8 @@ export default function Interpretation({
   const [expandedLine, setExpandedLine] = useState<number | null>(null);
   const hasChanging = lines.some(isChanging);
 
-  const confucianPrimary = getConfucianCommentary(primary.number);
-  const confucianResulting =
-    resulting != null ? getConfucianCommentary(resulting.number) : undefined;
-
-  const confucianJudgement = (t: typeof confucianPrimary) =>
-    t?.judgement && t.judgement.trim().length > 0 ? t.judgement : '—';
-  const confucianImage = (t: typeof confucianPrimary) =>
-    t?.image && t.image.trim().length > 0 ? t.image : '—';
-
   const wilhelmLineText = (lineIndex: number) =>
     primary.lines[(lineIndex + 1) as 1 | 2 | 3 | 4 | 5 | 6]?.text ?? '—';
-  const confucianLineText = (lineIndex: number) => {
-    const t = confucianPrimary?.lines?.[String(lineIndex + 1)];
-    return t && t.trim().length > 0 ? t : '—';
-  };
 
   const soberPrimary = getSoberJudgementNote(primary.number);
   const soberResulting =
@@ -81,9 +68,6 @@ export default function Interpretation({
         <TranslationStanza title="Wilhelm / Baynes">
           <p>{primary.judgement}</p>
         </TranslationStanza>
-        <TranslationStanza title="Confucian (Legge)">
-          <p>{confucianJudgement(confucianPrimary)}</p>
-        </TranslationStanza>
 
         <h3>Plain read</h3>
         <div className="plain-read-card">
@@ -94,15 +78,12 @@ export default function Interpretation({
         <TranslationStanza title="Wilhelm / Baynes">
           <p>{primary.image}</p>
         </TranslationStanza>
-        <TranslationStanza title="Confucian (Legge)">
-          <p>{confucianImage(confucianPrimary)}</p>
-        </TranslationStanza>
       </div>
 
       <div className="lines-section">
         <h3>Lines</h3>
         <p className="lines-hint">
-          Top = line 6, bottom = line 1 (same order as the coins and hexagram). Click a line to expand both readings.
+          Top = line 6, bottom = line 1 (same order as the coins and hexagram). Click a line to expand the Wilhelm / Baynes text.
         </p>
         <div className="line-details">
           {LINE_DISPLAY_ORDER.map((i) => {
@@ -125,9 +106,6 @@ export default function Interpretation({
                   <div className="line-expanded">
                     <TranslationStanza title="Wilhelm / Baynes">
                       <p className="line-reading">{wilhelmLineText(i)}</p>
-                    </TranslationStanza>
-                    <TranslationStanza title="Confucian (Legge)">
-                      <p className="line-reading">{confucianLineText(i)}</p>
                     </TranslationStanza>
                   </div>
                 )}
@@ -155,9 +133,6 @@ export default function Interpretation({
           <TranslationStanza title="Wilhelm / Baynes">
             <p>{resulting.judgement}</p>
           </TranslationStanza>
-          <TranslationStanza title="Confucian (Legge)">
-            <p>{confucianJudgement(confucianResulting)}</p>
-          </TranslationStanza>
 
           {soberResulting && (
             <>
@@ -171,9 +146,6 @@ export default function Interpretation({
           <h4 className="transformation-subheading">Image</h4>
           <TranslationStanza title="Wilhelm / Baynes">
             <p>{resulting.image}</p>
-          </TranslationStanza>
-          <TranslationStanza title="Confucian (Legge)">
-            <p>{confucianImage(confucianResulting)}</p>
           </TranslationStanza>
         </div>
       )}
