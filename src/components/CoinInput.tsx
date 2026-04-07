@@ -4,19 +4,19 @@ function CoinKey() {
   return (
     <div className="coin-key" aria-label="Coin symbols">
       <div className="coin-key-row">
-        <span className="coin-key-sample tails" aria-hidden>○</span>
-        <span>Tails (empty ring)</span>
+        <span className="coin-key-sample tails" aria-hidden>O</span>
+        <span>Tails = O</span>
       </div>
       <div className="coin-key-row">
-        <span className="coin-key-sample heads" aria-hidden>●</span>
-        <span>Heads (filled)</span>
+        <span className="coin-key-sample heads" aria-hidden>X</span>
+        <span>Heads (penny / obverse) = X</span>
       </div>
       <div className="coin-key-row muted">
-        <span>Each ● (heads) = 3 · each ○ (tails) = 2 (add the three coins → total 6–9)</span>
+        <span>Each X (heads) = 3 · each O (tails) = 2 (add the three coins → total 6–9)</span>
       </div>
       <div className="coin-key-row muted small">
         <span>
-          6 = ○○○ (old yin, broken) · 7 = ●○○ (young yang, solid) · 8 = ●●○ (young yin, broken) · 9 = ●●● (old
+          6 = OOO (old yin, broken) · 7 = XOO (young yang, solid) · 8 = XXO (young yin, broken) · 9 = XXX (old
           yang)
         </span>
       </div>
@@ -33,7 +33,7 @@ function ThreeCoins({
   onChange: (v: LineValue) => void;
   disabled?: boolean;
 }) {
-  // ●=3 ○=2 → h heads: sum = 6 + h → h = value − 6
+  // X=3 O=2 → h heads: sum = 6 + h → h = value − 6
   const heads = value - 6;
 
   const toggle = (i: number) => {
@@ -55,15 +55,15 @@ function ThreeCoins({
           className={`coin ${i < heads ? 'heads' : 'tails'}`}
           onClick={(e) => {
             toggle(i);
-            // iOS/Android can leave a “hover” or focus state that paints over ●/○ until another tap
+            // iOS/Android can leave a “hover” or focus state that paints over X/O until another tap
             if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
               (e.currentTarget as HTMLButtonElement).blur();
             }
           }}
           disabled={disabled}
-          aria-label={i < heads ? 'Heads (filled)' : 'Tails (empty)'}
+          aria-label={i < heads ? 'Heads (X)' : 'Tails (O)'}
         >
-          {i < heads ? '●' : '○'}
+          {i < heads ? 'X' : 'O'}
         </button>
       ))}
     </div>

@@ -233,7 +233,9 @@
   border: 2px solid var(--color-ink);
   background: var(--color-cream);
   color: var(--color-ink);
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;

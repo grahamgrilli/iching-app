@@ -1,10 +1,10 @@
 /**
  * I Ching three-coin method (Wilhelm-style convention)
- * Each ● (heads) = 3, each ○ (tails) = 2
- * 6 = ○○○ old yin (changing) · 7 = ●○○ young yang · 8 = ●●○ young yin · 9 = ●●● old yang (changing)
+ * Each X (heads) = 3, each O (tails) = 2
+ * 6 = OOO old yin (changing) · 7 = XOO young yang · 8 = XXO young yin · 9 = XXX old yang (changing)
  * Line type: 7 and 9 = yang (solid); 6 and 8 = yin (broken) — matches standard charts / King Wen lookup.
  *
- * Some teachers use ●=2, ○=3 instead (same 6–9 meanings, but 2H/2T swap which total is 7 vs 8).
+ * Some teachers use X=2, O=3 instead (same 6–9 meanings, but 2H/2T swap which total is 7 vs 8).
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
@@ -23,7 +23,7 @@ export function isChanging(value: LineValue): boolean {
   return value === 6 || value === 9;
 }
 
-/** Number of heads (●); each ● = 3, each ○ = 2 → sum 6–9 */
+/** Number of heads (X); each X = 3, each O = 2 → sum 6–9 */
 export function coinsToLine(heads: number): LineValue {
   const tails = 3 - heads;
   const sum = heads * 3 + tails * 2;
