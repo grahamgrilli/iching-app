@@ -574,6 +574,33 @@
   margin-bottom: 0;
 }
 
+/* Wilhelm Image: heading + bar, then square art, then text only (no source label) */
+.image-section {
+  margin: 0 0 0.5rem;
+}
+
+.image-block-print-wrap {
+  width: min(168px, 44vw);
+  max-width: 100%;
+  margin: 0 auto 1rem;
+  aspect-ratio: 1 / 1;
+  color: rgba(18, 22, 28, 0.88);
+}
+
+.image-block-print {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.image-description {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 1.06rem;
+  color: var(--color-ink);
+}
+
 .translation-source {
   margin: 0 0 0.4rem;
   font-family: var(--font-body);

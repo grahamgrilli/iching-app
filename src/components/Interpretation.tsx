@@ -3,6 +3,7 @@ import type { LineValue } from '../lib/cast';
 import type { HexagramData } from '../data/hexagrams';
 import { getSoberJudgementNote } from '../data/hexagrams';
 import { isChanging } from '../lib/cast';
+import ImageBlockPrint from './ImageBlockPrint';
 
 const LINE_LABELS: Record<LineValue, string> = {
   6: 'Old Yin — Changing',
@@ -75,9 +76,12 @@ export default function Interpretation({
         </div>
 
         <h3>Image</h3>
-        <TranslationStanza title="Wilhelm / Baynes">
-          <p>{primary.image}</p>
-        </TranslationStanza>
+        <div className="image-section">
+          <div className="image-block-print-wrap">
+            <ImageBlockPrint hexNumber={primary.number} imageText={primary.image} />
+          </div>
+          <p className="image-description">{primary.image}</p>
+        </div>
       </div>
 
       <div className="lines-section">
@@ -144,9 +148,12 @@ export default function Interpretation({
           )}
 
           <h4 className="transformation-subheading">Image</h4>
-          <TranslationStanza title="Wilhelm / Baynes">
-            <p>{resulting.image}</p>
-          </TranslationStanza>
+          <div className="image-section">
+            <div className="image-block-print-wrap">
+              <ImageBlockPrint hexNumber={resulting.number} imageText={resulting.image} />
+            </div>
+            <p className="image-description">{resulting.image}</p>
+          </div>
         </div>
       )}
     </div>
