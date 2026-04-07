@@ -58,37 +58,30 @@
 
 .app-header {
   position: relative;
-  z-index: 1;
-  padding: 1.75rem 1.25rem 1.5rem;
+  z-index: 2;
+  width: 100%;
+  padding: 1.05rem 1.5rem 0.9rem;
   text-align: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(252, 252, 250, 0.94);
-  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  background: linear-gradient(180deg, #2a2e36 0%, #22262c 100%);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.75) inset,
-    0 8px 28px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.06);
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 12px 32px rgba(0, 0, 0, 0.42),
+    0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
-.app-header h1 {
-  font-family: var(--font-display, 'Prata', serif);
-  font-size: clamp(2.1rem, 5vw, 3rem);
-  font-weight: 400;
-  margin: 0;
-  color: var(--color-ink);
-  letter-spacing: 0.06em;
-  line-height: 1.15;
-}
-
-.subtitle {
-  margin: 0.6rem 0 0;
+.app-title {
   font-family: var(--font-label, 'Cinzel', serif);
-  font-size: 0.78rem;
+  font-size: clamp(0.82rem, 2.4vw, 1.05rem);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  margin: 0;
+  padding: 0 0.5rem;
+  color: rgba(236, 238, 242, 0.96);
+  letter-spacing: 0.38em;
+  line-height: 1.25;
   text-transform: uppercase;
-  color: var(--color-accent);
-  font-style: normal;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
 .app-main {
@@ -99,21 +92,24 @@
   margin: 0 auto;
   padding: 1.35rem 1.25rem 2.25rem;
   width: 100%;
+  overflow: visible;
 }
 
-/* Side-by-side: coins | hexagram */
-.casting-row {
-  display: grid;
-  grid-template-columns: 1fr minmax(200px, 260px);
-  gap: 1.35rem;
-  align-items: start;
+/* Coin column matches interpretation width; hex floats beside on wide viewports */
+.layout-stack {
+  position: relative;
+  width: 100%;
+}
+
+.casting-block {
+  position: relative;
+  width: 100%;
   margin-bottom: 1.65rem;
+  z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .casting-row {
-    grid-template-columns: 1fr;
-  }
+.coin-panel {
+  width: 100%;
 }
 
 .casting-panel {
@@ -127,6 +123,56 @@
 
 .hex-panel {
   text-align: center;
+}
+
+.hex-panel--aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.85rem 1.1rem;
+  aspect-ratio: 1 / 1;
+  max-width: 280px;
+  margin: 1.25rem auto 0;
+}
+
+.hex-panel--aside .hexagram-panel-inline {
+  flex: 1;
+  justify-content: center;
+  padding: 0.35rem 0;
+  gap: 0.35rem;
+}
+
+.hex-panel--aside .hexagram-svg {
+  width: min(168px, 58%);
+  height: auto;
+  max-height: 42%;
+}
+
+.hex-panel--aside .hexagram-unicode {
+  font-size: 2.1rem;
+}
+
+.hex-panel--aside .hex-panel-label {
+  margin-bottom: 0.35rem;
+}
+
+.hex-panel--aside .hex-panel-note {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Wide screens only: hex sits beside the roll card without narrowing it (needs ~1480px viewport) */
+@media (min-width: 1480px) {
+  .hex-panel--aside {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 1rem);
+    margin: 0;
+    width: min(248px, 18vw);
+    max-width: none;
+    z-index: 2;
+  }
 }
 
 .hex-panel-label {
@@ -170,6 +216,7 @@
   font-family: var(--font-script, 'Caveat', cursive);
   font-size: 1.35em;
   font-weight: 600;
+  font-style: normal;
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
@@ -287,75 +334,78 @@
   color: var(--color-heading);
 }
 
-/* Tic-tac-toe style: X – O – O in script, not circles */
-.three-coins--script {
+/* Dark “coins”: script X/O in light ink on circular charcoal (not italic) */
+.three-coins--dark {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: flex-start;
   flex-wrap: nowrap;
   gap: 0;
-  min-height: 2.5rem;
+  min-height: 2.65rem;
 }
 
 .coin-script-cell {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .coin-script-sep {
-  font-family: var(--font-script, 'Caveat', cursive);
-  font-size: 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
   font-weight: 500;
-  color: rgba(15, 20, 25, 0.35);
-  margin: 0 0.12rem;
+  color: rgba(15, 20, 25, 0.28);
+  margin: 0 0.35rem;
   line-height: 1;
   user-select: none;
 }
 
 .coin-mark {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
   font-family: var(--font-script, 'Caveat', cursive);
-  font-size: 2.15rem;
+  font-size: 1.35rem;
   font-weight: 600;
+  font-style: normal;
   line-height: 1;
-  min-width: 1.5rem;
-  padding: 0.1rem 0.2rem;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
+  color: rgba(244, 246, 248, 0.96);
+  background: linear-gradient(165deg, #2f3540 0%, #1c2028 55%, #14181e 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 4px 10px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   transition:
-    color 0.15s ease,
     transform 0.12s ease,
-    background 0.15s ease;
+    box-shadow 0.15s ease,
+    filter 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .coin-mark:disabled {
   cursor: default;
-  opacity: 0.65;
+  opacity: 0.55;
 }
 
-.coin-mark--x {
-  color: var(--color-ink);
-}
-
+.coin-mark--x,
 .coin-mark--o {
-  color: rgba(26, 40, 56, 0.72);
+  color: rgba(244, 246, 248, 0.96);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .coin-mark:hover:not(:disabled) {
     transform: translateY(-1px);
-    background: rgba(44, 74, 110, 0.08);
-  }
-
-  .coin-mark--x:hover:not(:disabled) {
-    color: #0a0e12;
-  }
-
-  .coin-mark--o:hover:not(:disabled) {
-    color: var(--color-heading);
+    filter: brightness(1.08);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14) inset,
+      0 6px 14px rgba(0, 0, 0, 0.28);
   }
 }
 
@@ -737,15 +787,19 @@
 }
 
 @media (max-width: 480px) {
-  .app-header h1 {
-    font-size: 1.95rem;
+  .app-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    padding: 0 0.35rem;
   }
   .coin-mark {
-    font-size: 1.85rem;
+    width: 2.15rem;
+    height: 2.15rem;
+    font-size: 1.2rem;
   }
 
   .coin-script-sep {
-    font-size: 1.5rem;
+    margin: 0 0.28rem;
   }
   .hexagram-svg {
     width: 100%;

@@ -60,7 +60,7 @@ function ThreeCoins({
   };
 
   return (
-    <div className="three-coins three-coins--script" role="group" aria-label="Three coins, left to right">
+    <div className="three-coins three-coins--dark" role="group" aria-label="Three coins, left to right">
       {[0, 1, 2].map((i) => (
         <span key={i} className="coin-script-cell">
           {i > 0 && (
