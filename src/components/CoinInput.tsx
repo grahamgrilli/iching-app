@@ -2,24 +2,37 @@ import type { LineValue } from '../lib/cast';
 
 function CoinKey() {
   return (
-    <div className="coin-key" aria-label="Coin symbols">
-      <div className="coin-key-row">
-        <span className="coin-key-sample tails" aria-hidden>O</span>
-        <span>Tails = O</span>
+    <div className="coin-key" aria-label="How to record your coins">
+      <div className="coin-key-visible">
+        <p className="coin-key-line">
+          <strong>Heads = X</strong>
+          <span className="coin-key-dot" aria-hidden>
+            ·
+          </span>
+          <strong>Tails = O</strong>
+        </p>
+        <p className="coin-key-line coin-key-line--sub">
+          Lines <strong>1–6</strong> go <strong>bottom to top</strong> — line 1 is the bottom row (first roll).
+        </p>
       </div>
-      <div className="coin-key-row">
-        <span className="coin-key-sample heads" aria-hidden>X</span>
-        <span>Heads (penny / obverse) = X</span>
-      </div>
-      <div className="coin-key-row muted">
-        <span>Each X (heads) = 3 · each O (tails) = 2 (add the three coins → total 6–9)</span>
-      </div>
-      <div className="coin-key-row muted small">
-        <span>
-          6 = OOO (old yin, broken) · 7 = XOO (young yang, solid) · 8 = XXO (young yin, broken) · 9 = XXX (old
-          yang)
-        </span>
-      </div>
+
+      <details className="coin-scoring-details">
+        <summary className="coin-scoring-summary">
+          <span className="coin-scoring-summary-label">Scoring</span>
+          <span className="coin-scoring-chevron" aria-hidden>
+            ▼
+          </span>
+        </summary>
+        <div className="coin-scoring-body">
+          <p>Each head (X) counts as 3.</p>
+          <p>Each tail (O) counts as 2.</p>
+          <p>Add the three coins; the total is your line value (6 through 9).</p>
+          <p>6 = O O O — old yin (broken), changing</p>
+          <p>7 = X O O — young yang (solid)</p>
+          <p>8 = X X O — young yin (broken)</p>
+          <p>9 = X X X — old yang, changing</p>
+        </div>
+      </details>
     </div>
   );
 }
@@ -47,24 +60,29 @@ function ThreeCoins({
   };
 
   return (
-    <div className="three-coins">
+    <div className="three-coins three-coins--script" role="group" aria-label="Three coins, left to right">
       {[0, 1, 2].map((i) => (
-        <button
-          key={i}
-          type="button"
-          className={`coin ${i < heads ? 'heads' : 'tails'}`}
-          onClick={(e) => {
-            toggle(i);
-            // iOS/Android can leave a “hover” or focus state that paints over X/O until another tap
-            if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-              (e.currentTarget as HTMLButtonElement).blur();
-            }
-          }}
-          disabled={disabled}
-          aria-label={i < heads ? 'Heads (X)' : 'Tails (O)'}
-        >
-          {i < heads ? 'X' : 'O'}
-        </button>
+        <span key={i} className="coin-script-cell">
+          {i > 0 && (
+            <span className="coin-script-sep" aria-hidden>
+              –
+            </span>
+          )}
+          <button
+            type="button"
+            className={`coin-mark ${i < heads ? 'coin-mark--x' : 'coin-mark--o'}`}
+            onClick={(e) => {
+              toggle(i);
+              if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+                (e.currentTarget as HTMLButtonElement).blur();
+              }
+            }}
+            disabled={disabled}
+            aria-label={i < heads ? 'Heads (X)' : 'Tails (O)'}
+          >
+            {i < heads ? 'X' : 'O'}
+          </button>
+        </span>
       ))}
     </div>
   );
@@ -85,13 +103,13 @@ export default function CoinInput({
     onChange(next);
   };
 
-  // Visual order: line 6 at top, line 1 at bottom (matches hexagram)
   const displayOrder = [5, 4, 3, 2, 1, 0] as const;
 
   return (
     <div className="coin-input">
       <p className="coin-instruction">
-        Focus on your question. Toss six times <strong>bottom to top</strong> — line <strong>1</strong> is the <strong>bottom</strong> row here.
+        Focus on your question. Tap each row to match your three coins — left to right, like{' '}
+        <span className="coin-instruction-sample">X – O – O</span>.
       </p>
       <CoinKey />
       <div className="line-inputs">
@@ -103,7 +121,9 @@ export default function CoinInput({
               onChange={(v) => updateLine(idx, v)}
               disabled={disabled}
             />
-            <span className="line-value">{lines[idx]}</span>
+            <span className="line-value" title="Line value (optional check)">
+              {lines[idx]}
+            </span>
           </div>
         ))}
       </div>
