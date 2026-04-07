@@ -3,12 +3,12 @@
 }
 
 :root {
-  --color-bg: #e8e6e0;
+  --color-bg: #3d4450;
   --color-ink: #0f1419;
-  --color-cream: #f7f6f2;
+  --color-cream: #fafaf8;
   --color-ink-muted: rgba(15, 20, 25, 0.68);
   --color-heading: #1a2838;
-  --color-accent: #2c4a6e;
+  --color-accent: #5b7eb3;
   --font-display: 'Prata', 'Times New Roman', serif;
   --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-label: 'Cinzel', Georgia, serif;

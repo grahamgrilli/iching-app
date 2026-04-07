@@ -9,7 +9,7 @@ import {
   binaryToHexagramNumber,
 } from './lib/cast';
 import { getHexagramByBinary } from './data/hexagrams';
-import WaveBackdrop from './components/WaveBackdrop';
+import CrackBackdrop from './components/CrackBackdrop';
 import './App.css';
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="app">
-      <WaveBackdrop />
+      <CrackBackdrop />
       <div className="app-shade" aria-hidden />
       <header className="app-header">
         <h1>I Ching</h1>
