@@ -4,7 +4,7 @@ A static web app for interpreting I Ching hexagram readings. Record your three-c
 
 ## Features
 
-- **Manual coin input** — Toggle 3 coins per line to match your physical roll (heads = **X** = 3, tails = **O** = 2)
+- **Manual coin input** — Toggle 3 coins per line (heads = solid disk, tails = open ring; 3 vs 2 points)
 - **Brushstroke hexagram** — Lines rendered in a Hokusai-inspired ink style
 - **Interpretations** — Judgement, Image, expandable line-by-line Wilhelm / Baynes text, and a plain-language gloss under **Plain read** (`src/data/soberJudgementNotes.json`)
 - **Changing lines** — Strong yin (6) and strong yang (9) show line-specific guidance and a resulting hexagram

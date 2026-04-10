@@ -212,13 +212,38 @@
   color: var(--color-ink);
 }
 
-.coin-instruction-sample {
-  font-family: var(--font-script, 'Caveat', cursive);
-  font-size: 1.35em;
-  font-weight: 600;
-  font-style: normal;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+.coin-key-line--coins-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.coin-key-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.coin-key-sample {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.coin-key-sample--heads {
+  background: radial-gradient(circle at 32% 28%, #fdf4dc, #d4b46a 52%, #8f7238);
+  border: 1.5px solid #5c4a28;
+  box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.coin-key-sample--tails {
+  box-sizing: border-box;
+  background: linear-gradient(165deg, #f5f2ea, #e0dbd2);
+  border: 2.5px solid #6b6358;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
 .coin-key {
@@ -334,78 +359,85 @@
   color: var(--color-heading);
 }
 
-/* Dark “coins”: script X/O in light ink on circular charcoal (not italic) */
-.three-coins--dark {
+/* Traditional coin marks: heads = filled disk, tails = open ring (I Ching / Wilhelm style) */
+.three-coins--traditional {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: nowrap;
   gap: 0;
-  min-height: 2.65rem;
+  min-height: 2.75rem;
 }
 
-.coin-script-cell {
+.coin-slot {
   display: inline-flex;
   align-items: center;
 }
 
-.coin-script-sep {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: rgba(15, 20, 25, 0.28);
-  margin: 0 0.35rem;
+.coin-slot-sep {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(15, 20, 25, 0.22);
+  margin: 0 0.32rem;
   line-height: 1;
   user-select: none;
 }
 
-.coin-mark {
+.coin-face {
   box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.45rem;
-  height: 2.45rem;
+  width: 2.5rem;
+  height: 2.5rem;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50%;
-  font-family: var(--font-script, 'Caveat', cursive);
-  font-size: 1.35rem;
-  font-weight: 600;
-  font-style: normal;
-  line-height: 1;
-  color: rgba(244, 246, 248, 0.96);
-  background: linear-gradient(165deg, #2f3540 0%, #1c2028 55%, #14181e 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.1) inset,
-    0 4px 10px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   transition:
     transform 0.12s ease,
     box-shadow 0.15s ease,
-    filter 0.15s ease,
-    border-color 0.15s ease;
+    filter 0.15s ease;
 }
 
-.coin-mark:disabled {
+.coin-face:disabled {
   cursor: default;
   opacity: 0.55;
 }
 
-.coin-mark--x,
-.coin-mark--o {
-  color: rgba(244, 246, 248, 0.96);
+/* Heads: solid “yang” coin — warm metal fill */
+.coin-face--heads {
+  border: 2px solid #5c4a28;
+  background: radial-gradient(circle at 32% 28%, #fdf4dc, #d4b46a 48%, #8f7238 88%, #6a5428);
+  box-shadow:
+    inset 2px 2px 4px rgba(255, 255, 255, 0.45),
+    inset -2px -3px 6px rgba(0, 0, 0, 0.22),
+    0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Tails: open ring — light face, dark rim (like a coin edge / yin ring) */
+.coin-face--tails {
+  border: 3px solid #5a5248;
+  background: linear-gradient(155deg, #faf8f3, #e8e3d8);
+  box-shadow:
+    inset 0 1px 3px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.06),
+    0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .coin-mark:hover:not(:disabled) {
+  .coin-face:hover:not(:disabled) {
     transform: translateY(-1px);
-    filter: brightness(1.08);
+    filter: brightness(1.04);
+  }
+
+  .coin-face--heads:hover:not(:disabled) {
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.14) inset,
-      0 6px 14px rgba(0, 0, 0, 0.28);
+      inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+      inset -2px -3px 6px rgba(0, 0, 0, 0.2),
+      0 5px 12px rgba(0, 0, 0, 0.14);
+  }
+
+  .coin-face--tails:hover:not(:disabled) {
+    border-color: #3d3832;
   }
 }
 
@@ -837,14 +869,13 @@
     letter-spacing: 0.22em;
     padding: 0 0.35rem;
   }
-  .coin-mark {
-    width: 2.15rem;
-    height: 2.15rem;
-    font-size: 1.2rem;
+  .coin-face {
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
-  .coin-script-sep {
-    margin: 0 0.28rem;
+  .coin-slot-sep {
+    margin: 0 0.24rem;
   }
   .hexagram-svg {
     width: 100%;
