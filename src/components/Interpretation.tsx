@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import type { LineValue } from '../lib/cast';
 import type { HexagramData } from '../data/hexagrams';
 import { getSoberJudgementNote } from '../data/hexagrams';
@@ -14,21 +14,6 @@ const LINE_LABELS: Record<LineValue, string> = {
 
 /** Top to bottom: line 6 … line 1 — matches hexagram drawing and coin rows */
 const LINE_DISPLAY_ORDER: readonly number[] = [5, 4, 3, 2, 1, 0];
-
-function TranslationStanza({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="translation-stanza">
-      <p className="translation-source">{title}</p>
-      <div className="translation-prose">{children}</div>
-    </div>
-  );
-}
 
 export default function Interpretation({
   primary,
@@ -66,17 +51,16 @@ export default function Interpretation({
 
       <div className="overview">
         <h3>Judgement</h3>
-        <TranslationStanza title="Wilhelm / Baynes">
-          <p>{primary.judgement}</p>
-        </TranslationStanza>
+        <p className="judgement-text">{primary.judgement}</p>
 
-        <h3>Plain read</h3>
-        <div className="plain-read-card">
-          <p className="sober-read">{soberPrimary}</p>
-        </div>
+        {soberPrimary.trim().length > 0 && (
+          <div className="plain-read-card">
+            <p className="plain-read-card-title">Plain read</p>
+            <p className="sober-read">{soberPrimary}</p>
+          </div>
+        )}
 
-        <h3>Image</h3>
-        <div className="image-section">
+        <div className="image-illustration-card">
           <div className="image-block-print-wrap">
             <ImageBlockPrint hexNumber={primary.number} imageText={primary.image} />
           </div>
@@ -87,7 +71,7 @@ export default function Interpretation({
       <div className="lines-section">
         <h3>Lines</h3>
         <p className="lines-hint">
-          Top = line 6, bottom = line 1 (same order as the coins and hexagram). Click a line to expand the Wilhelm / Baynes text.
+          Top = line 6, bottom = line 1 (same order as the coins and hexagram). Click a line to expand.
         </p>
         <div className="line-details">
           {LINE_DISPLAY_ORDER.map((i) => {
@@ -108,9 +92,7 @@ export default function Interpretation({
                 </button>
                 {expandedLine === i && (
                   <div className="line-expanded">
-                    <TranslationStanza title="Wilhelm / Baynes">
-                      <p className="line-reading">{wilhelmLineText(i)}</p>
-                    </TranslationStanza>
+                    <p className="line-reading">{wilhelmLineText(i)}</p>
                   </div>
                 )}
               </div>
@@ -134,21 +116,16 @@ export default function Interpretation({
           <p className="chinese">{resulting.chinese} — {resulting.pinyin}</p>
 
           <h4 className="transformation-subheading">Judgement</h4>
-          <TranslationStanza title="Wilhelm / Baynes">
-            <p>{resulting.judgement}</p>
-          </TranslationStanza>
+          <p className="judgement-text">{resulting.judgement}</p>
 
-          {soberResulting && (
-            <>
-              <h4 className="transformation-subheading">Plain read</h4>
-              <div className="plain-read-card">
-                <p className="sober-read">{soberResulting}</p>
-              </div>
-            </>
+          {soberResulting.trim().length > 0 && (
+            <div className="plain-read-card">
+              <p className="plain-read-card-title">Plain read</p>
+              <p className="sober-read">{soberResulting}</p>
+            </div>
           )}
 
-          <h4 className="transformation-subheading">Image</h4>
-          <div className="image-section">
+          <div className="image-illustration-card">
             <div className="image-block-print-wrap">
               <ImageBlockPrint hexNumber={resulting.number} imageText={resulting.image} />
             </div>

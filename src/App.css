@@ -574,17 +574,24 @@
   margin-bottom: 0;
 }
 
-/* Wilhelm Image: heading + bar, then square art, then text only (no source label) */
-.image-section {
-  margin: 0 0 0.5rem;
+/* Block-print art + image text on its own card (distinct from main cream) */
+.image-illustration-card {
+  margin: 0 0 0.35rem;
+  padding: 1.35rem 1.4rem 1.4rem;
+  background: rgba(228, 224, 214, 0.92);
+  border: 1px solid rgba(44, 74, 110, 0.14);
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 4px 14px rgba(15, 20, 25, 0.06);
 }
 
-.image-block-print-wrap {
-  width: min(168px, 44vw);
+.image-illustration-card .image-block-print-wrap {
+  width: min(336px, 88vw);
   max-width: 100%;
-  margin: 0 auto 1rem;
+  margin: 0 auto 1.15rem;
   aspect-ratio: 1 / 1;
-  color: rgba(18, 22, 28, 0.88);
+  color: rgba(18, 22, 28, 0.9);
 }
 
 .image-block-print {
@@ -599,6 +606,23 @@
   line-height: 1.65;
   font-size: 1.06rem;
   color: var(--color-ink);
+}
+
+.judgement-text {
+  margin: 0 0 1.1rem;
+  line-height: 1.65;
+  font-size: 1.06rem;
+  color: var(--color-ink);
+}
+
+.plain-read-card-title {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-label, 'Cinzel', serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
 
 .translation-source {
@@ -622,8 +646,8 @@
   background: var(--color-cream);
   border: 1.5px solid rgba(44, 74, 110, 0.22);
   border-radius: 16px;
-  padding: 1.05rem 1.2rem;
-  margin: 0 0 1.15rem;
+  padding: 1.05rem 1.2rem 1.15rem;
+  margin: 0 0 1.25rem;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.75),
     3px 4px 0 rgba(15, 20, 25, 0.06);
@@ -631,6 +655,7 @@
 
 .plain-read-card .sober-read {
   margin-bottom: 0 !important;
+  margin-top: 0;
 }
 
 .sober-read {
@@ -726,15 +751,8 @@
   border-top: 1px solid rgba(20, 20, 20, 0.1);
 }
 
-.line-expanded .translation-stanza {
-  margin-bottom: 1.1rem;
-}
-
-.line-expanded .translation-stanza:last-child {
-  margin-bottom: 0;
-}
-
 .line-reading {
+  margin: 0;
   font-style: normal;
   line-height: 1.62;
   font-size: 1.02rem;
