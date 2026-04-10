@@ -1,4 +1,4 @@
-import type { LineValue } from '../lib/cast';
+import type { LineSlot, LineValue } from '../lib/cast';
 
 function CoinKey() {
   return (
@@ -6,19 +6,26 @@ function CoinKey() {
       <div className="coin-key-visible">
         <p className="coin-key-line coin-key-line--coins-legend">
           <span className="coin-key-legend-item">
-            <span className="coin-key-sample coin-key-sample--heads" aria-hidden />
-            <strong>Heads</strong> (solid)
+            <span className="coin-key-sample coin-key-sample--heads" aria-hidden>
+              <span className="coin-key-sample-hole" />
+            </span>
+            <strong>Heads</strong>
+            <span className="coin-key-legend-hint">filled</span>
           </span>
           <span className="coin-key-dot" aria-hidden>
             ·
           </span>
           <span className="coin-key-legend-item">
-            <span className="coin-key-sample coin-key-sample--tails" aria-hidden />
-            <strong>Tails</strong> (ring)
+            <span className="coin-key-sample coin-key-sample--tails" aria-hidden>
+              <span className="coin-key-sample-hole" />
+            </span>
+            <strong>Tails</strong>
+            <span className="coin-key-legend-hint">outline</span>
           </span>
         </p>
         <p className="coin-key-line coin-key-line--sub">
-          Lines <strong>1–6</strong> go <strong>bottom to top</strong> — line 1 is the bottom row (first roll).
+          Flat “cash” style coins (square hole). Lines <strong>1–6</strong> bottom to top — line 1 is your first
+          toss.
         </p>
       </div>
 
@@ -28,13 +35,13 @@ function CoinKey() {
           <span className="coin-scoring-chevron" aria-hidden>▼</span>
         </summary>
         <div className="coin-scoring-body">
-          <p>Each head (solid) counts as 3.</p>
-          <p>Each tail (ring) counts as 2.</p>
+          <p>Each head counts as 3.</p>
+          <p>Each tail counts as 2.</p>
           <p>Add the three coins; the total is your line value (6 through 9).</p>
-          <p>6 = three rings — old yin (broken), changing</p>
-          <p>7 = one solid, two rings — young yang (solid)</p>
-          <p>8 = two solids, one ring — young yin (broken)</p>
-          <p>9 = three solids — old yang, changing</p>
+          <p>6 = three tails — old yin (broken), changing</p>
+          <p>7 = one head, two tails — young yang (solid)</p>
+          <p>8 = two heads, one tail — young yin (broken)</p>
+          <p>9 = three heads — old yang, changing</p>
         </div>
       </details>
     </div>
@@ -46,45 +53,62 @@ function ThreeCoins({
   onChange,
   disabled,
 }: {
-  value: LineValue;
+  value: LineSlot;
   onChange: (v: LineValue) => void;
   disabled?: boolean;
 }) {
-  const heads = value - 6;
+  const base = value === null ? 6 : value;
+  const heads = base - 6;
 
   const toggle = (i: number) => {
     if (disabled) return;
-    let newHeads = heads;
-    if (i < heads) newHeads = heads - 1;
-    else newHeads = heads + 1;
-    newHeads = Math.max(0, Math.min(3, newHeads));
-    const sum = newHeads * 3 + (3 - newHeads) * 2;
-    onChange(sum as LineValue);
+    let h = (value === null ? 0 : value - 6);
+    if (i < h) h -= 1;
+    else h += 1;
+    h = Math.max(0, Math.min(3, h));
+    onChange((6 + h) as LineValue);
   };
 
   return (
-    <div className="three-coins three-coins--traditional" role="group" aria-label="Three coins, left to right">
-      {[0, 1, 2].map((i) => (
-        <span key={i} className="coin-slot">
-          {i > 0 && (
-            <span className="coin-slot-sep" aria-hidden>
-              ·
-            </span>
-          )}
-          <button
-            type="button"
-            className={`coin-face ${i < heads ? 'coin-face--heads' : 'coin-face--tails'}`}
-            onClick={(e) => {
-              toggle(i);
-              if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-                (e.currentTarget as HTMLButtonElement).blur();
+    <div className="three-coins three-coins--cash" role="group" aria-label="Three coins, left to right">
+      {[0, 1, 2].map((i) => {
+        const isUnset = value === null;
+        const isHead = !isUnset && i < heads;
+        const faceClass = isUnset
+          ? 'coin-face--unset'
+          : isHead
+            ? 'coin-face--heads'
+            : 'coin-face--tails';
+        return (
+          <span key={i} className="coin-slot">
+            {i > 0 && (
+              <span className="coin-slot-sep" aria-hidden>
+                ·
+              </span>
+            )}
+            <button
+              type="button"
+              className={`coin-face ${faceClass}`}
+              onClick={(e) => {
+                toggle(i);
+                if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+                  (e.currentTarget as HTMLButtonElement).blur();
+                }
+              }}
+              disabled={disabled}
+              aria-label={
+                isUnset
+                  ? 'Set coin'
+                  : isHead
+                    ? 'Heads (filled cash coin)'
+                    : 'Tails (outline cash coin)'
               }
-            }}
-            disabled={disabled}
-            aria-label={i < heads ? 'Heads (solid coin)' : 'Tails (open ring)'}
-          />
-        </span>
-      ))}
+            >
+              <span className="coin-hole" aria-hidden />
+            </button>
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -94,8 +118,8 @@ export default function CoinInput({
   onChange,
   disabled,
 }: {
-  lines: LineValue[];
-  onChange: (lines: LineValue[]) => void;
+  lines: LineSlot[];
+  onChange: (lines: LineSlot[]) => void;
   disabled?: boolean;
 }) {
   const updateLine = (idx: number, v: LineValue) => {
@@ -109,8 +133,8 @@ export default function CoinInput({
   return (
     <div className="coin-input">
       <p className="coin-instruction">
-        Tap each row to match your three tosses — <strong>solid</strong> = heads, <strong>ring</strong> = tails,
-        left to right.
+        Tap each row for your three coins — <strong>filled</strong> (brass) = heads, <strong>outline</strong> =
+        tails. Dashed coins are not set yet.
       </p>
       <CoinKey />
       <div className="line-inputs">
@@ -123,7 +147,7 @@ export default function CoinInput({
               disabled={disabled}
             />
             <span className="line-value" title="Line value (optional check)">
-              {lines[idx]}
+              {lines[idx] === null ? '—' : lines[idx]}
             </span>
           </div>
         ))}

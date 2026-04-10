@@ -8,7 +8,18 @@
  */
 
 export type LineValue = 6 | 7 | 8 | 9;
+/** One line of the cast; null = row not filled yet */
+export type LineSlot = LineValue | null;
 export type LineType = 'old-yin' | 'young-yang' | 'young-yin' | 'old-yang';
+
+export function castIsComplete(lines: LineSlot[]): lines is LineValue[] {
+  return lines.every((l) => l !== null);
+}
+
+export function linesToBinaryIfComplete(lines: LineSlot[]): string | null {
+  if (!castIsComplete(lines)) return null;
+  return linesToBinary(lines);
+}
 
 export function getLineType(value: LineValue): LineType {
   switch (value) {
@@ -48,6 +59,11 @@ export function linesToBinary(lines: LineValue[]): string {
 
 export function linesToResultingBinary(lines: LineValue[]): string {
   return lines.map(changingLineToBinary).reverse().join('');
+}
+
+export function linesToResultingBinaryIfComplete(lines: LineSlot[]): string | null {
+  if (!castIsComplete(lines)) return null;
+  return linesToResultingBinary(lines);
 }
 
 function padBinary(bin: string): string {

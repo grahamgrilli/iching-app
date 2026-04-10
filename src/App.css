@@ -225,25 +225,51 @@
   gap: 0.4rem;
 }
 
+.coin-key-legend-hint {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-ink-muted);
+}
+
 .coin-key-sample {
+  position: relative;
   display: inline-block;
-  width: 1.1rem;
-  height: 1.1rem;
+  box-sizing: border-box;
+  width: 1.15rem;
+  height: 1.15rem;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
+.coin-key-sample-hole {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32%;
+  height: 32%;
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
 .coin-key-sample--heads {
-  background: radial-gradient(circle at 32% 28%, #fdf4dc, #d4b46a 52%, #8f7238);
-  border: 1.5px solid #5c4a28;
-  box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+  background: #c4a35a;
+  border: 1.5px solid #4a3f28;
+}
+
+.coin-key-sample--heads .coin-key-sample-hole {
+  background: #ebe6dc;
+  border: 1px solid #3d3428;
 }
 
 .coin-key-sample--tails {
-  box-sizing: border-box;
-  background: linear-gradient(165deg, #f5f2ea, #e0dbd2);
-  border: 2.5px solid #6b6358;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  background: #ebe6dc;
+  border: 2px solid #4a3f28;
+}
+
+.coin-key-sample--tails .coin-key-sample-hole {
+  background: transparent;
+  border: 2px solid #4a3f28;
 }
 
 .coin-key {
@@ -359,8 +385,8 @@
   color: var(--color-heading);
 }
 
-/* Traditional coin marks: heads = filled disk, tails = open ring (I Ching / Wilhelm style) */
-.three-coins--traditional {
+/* Flat cash-style coins (round body, square hole); heads = filled brass, tails = light ring */
+.three-coins {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -384,6 +410,7 @@
 }
 
 .coin-face {
+  position: relative;
   box-sizing: border-box;
   width: 2.5rem;
   height: 2.5rem;
@@ -394,8 +421,18 @@
   touch-action: manipulation;
   transition:
     transform 0.12s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
+    border-color 0.15s ease;
+}
+
+.coin-hole {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32%;
+  height: 32%;
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
+  pointer-events: none;
 }
 
 .coin-face:disabled {
@@ -403,41 +440,53 @@
   opacity: 0.55;
 }
 
-/* Heads: solid “yang” coin — warm metal fill */
 .coin-face--heads {
-  border: 2px solid #5c4a28;
-  background: radial-gradient(circle at 32% 28%, #fdf4dc, #d4b46a 48%, #8f7238 88%, #6a5428);
-  box-shadow:
-    inset 2px 2px 4px rgba(255, 255, 255, 0.45),
-    inset -2px -3px 6px rgba(0, 0, 0, 0.22),
-    0 3px 8px rgba(0, 0, 0, 0.12);
+  border: 2px solid #4a3f28;
+  background: #c4a35a;
+  box-shadow: none;
 }
 
-/* Tails: open ring — light face, dark rim (like a coin edge / yin ring) */
+.coin-face--heads .coin-hole {
+  background: #ebe6dc;
+  border: 1.5px solid #3d3428;
+}
+
 .coin-face--tails {
-  border: 3px solid #5a5248;
-  background: linear-gradient(155deg, #faf8f3, #e8e3d8);
-  box-shadow:
-    inset 0 1px 3px rgba(255, 255, 255, 0.9),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.06),
-    0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 2px solid #4a3f28;
+  background: #ebe6dc;
+  box-shadow: none;
+}
+
+.coin-face--tails .coin-hole {
+  background: transparent;
+  border: 2px solid #4a3f28;
+}
+
+.coin-face--unset {
+  background: transparent;
+  border: 2px dashed rgba(92, 84, 72, 0.45);
+}
+
+.coin-face--unset .coin-hole {
+  background: transparent;
+  border: 1.5px dashed rgba(92, 84, 72, 0.4);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .coin-face:hover:not(:disabled) {
     transform: translateY(-1px);
-    filter: brightness(1.04);
   }
 
   .coin-face--heads:hover:not(:disabled) {
-    box-shadow:
-      inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-      inset -2px -3px 6px rgba(0, 0, 0, 0.2),
-      0 5px 12px rgba(0, 0, 0, 0.14);
+    border-color: #352e20;
   }
 
   .coin-face--tails:hover:not(:disabled) {
-    border-color: #3d3832;
+    border-color: #352e20;
+  }
+
+  .coin-face--unset:hover:not(:disabled) {
+    border-color: rgba(92, 84, 72, 0.65);
   }
 }
 
@@ -482,6 +531,17 @@
   color: var(--color-heading);
 }
 
+.hex-panel-pending {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+  max-width: 11rem;
+}
+
 /* Results */
 .results-section {
   animation: fadeIn 0.55s ease;
@@ -508,6 +568,21 @@
   margin-bottom: 1.5rem;
   color: var(--color-ink);
   box-shadow: var(--card-elevated);
+}
+
+.interpretation--pending {
+  text-align: center;
+}
+
+.interpretation--pending .interpretation-pending-text {
+  margin: 0 0 1.1rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  font-style: italic;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hexagram-number-row {
@@ -844,6 +919,14 @@
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
     0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cast-again--secondary {
+  background: rgba(252, 250, 246, 0.85);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 2px 6px rgba(0, 0, 0, 0.06);
+  border-style: dashed;
 }
 
 .app-footer {

@@ -1,6 +1,6 @@
-import type { LineValue } from '../lib/cast';
+import type { LineSlot, LineValue } from '../lib/cast';
 
-/** Straight segments with round caps (tapered-looking ends); strong yin = X in gap; strong yang = circle on solid. */
+/** Straight segments with round caps; strong yin = X in gap; strong yang = circle on solid. */
 function HexLine({
   value,
   onClick,
@@ -41,7 +41,6 @@ function HexLine({
     );
   }
 
-  // Yin: two segments
   return (
     <g onClick={onClick} className="hex-line-group">
       <line
@@ -77,14 +76,44 @@ function HexLine({
   );
 }
 
+/** Dashed yin-shaped placeholder for an unfilled line */
+function HexLinePlaceholder() {
+  const stroke = 'var(--color-ink, #1a1a1a)';
+  return (
+    <g className="hex-line-group hex-line-group--placeholder" aria-hidden>
+      <line
+        x1="6"
+        y1="10"
+        x2="39"
+        y2="10"
+        stroke={stroke}
+        strokeWidth={2.2}
+        strokeLinecap="round"
+        strokeDasharray="4 5"
+        opacity={0.28}
+      />
+      <line
+        x1="61"
+        y1="10"
+        x2="94"
+        y2="10"
+        stroke={stroke}
+        strokeWidth={2.2}
+        strokeLinecap="round"
+        strokeDasharray="4 5"
+        opacity={0.28}
+      />
+    </g>
+  );
+}
+
 export default function HexagramDisplay({
   lines,
   onLineClick,
 }: {
-  lines: LineValue[];
+  lines: LineSlot[];
   onLineClick?: (idx: number) => void;
 }) {
-  // Line 6 at top (small y), line 1 at bottom (large y) — matches I Ching reading
   const ordered = [...lines].reverse();
   return (
     <svg
@@ -98,10 +127,14 @@ export default function HexagramDisplay({
         const y = 6 + i * 13;
         return (
           <g key={sourceIdx} transform={`translate(0, ${y})`}>
-            <HexLine
-              value={v}
-              onClick={onLineClick ? () => onLineClick(sourceIdx) : undefined}
-            />
+            {v === null ? (
+              <HexLinePlaceholder />
+            ) : (
+              <HexLine
+                value={v}
+                onClick={onLineClick ? () => onLineClick(sourceIdx) : undefined}
+              />
+            )}
           </g>
         );
       })}
