@@ -24,8 +24,7 @@ function CoinKey() {
           </span>
         </p>
         <p className="coin-key-line coin-key-line--sub">
-          Flat “cash” style coins (square hole). Lines <strong>1–6</strong> bottom to top — line 1 is your first
-          toss.
+          Heads filled, tails outlined. Lines <strong>1–6</strong> bottom to top — line 1 is your first toss.
         </p>
       </div>
 

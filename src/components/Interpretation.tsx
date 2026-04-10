@@ -50,12 +50,10 @@ export default function Interpretation({
       </div>
 
       <div className="overview">
-        <h3>Judgement</h3>
         <p className="judgement-text">{primary.judgement}</p>
 
         {soberPrimary.trim().length > 0 && (
           <div className="plain-read-card">
-            <p className="plain-read-card-title">Plain read</p>
             <p className="sober-read">{soberPrimary}</p>
           </div>
         )}
@@ -115,12 +113,10 @@ export default function Interpretation({
           </h4>
           <p className="chinese">{resulting.chinese} — {resulting.pinyin}</p>
 
-          <h4 className="transformation-subheading">Judgement</h4>
           <p className="judgement-text">{resulting.judgement}</p>
 
           {soberResulting.trim().length > 0 && (
             <div className="plain-read-card">
-              <p className="plain-read-card-title">Plain read</p>
               <p className="sober-read">{soberResulting}</p>
             </div>
           )}

@@ -690,7 +690,8 @@
   border-radius: 18px;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 4px 14px rgba(15, 20, 25, 0.06);
+    0 6px 18px rgba(15, 20, 25, 0.1),
+    0 2px 6px rgba(15, 20, 25, 0.06);
 }
 
 .image-illustration-card .image-block-print-wrap {
@@ -720,16 +721,6 @@
   line-height: 1.65;
   font-size: 1.06rem;
   color: var(--color-ink);
-}
-
-.plain-read-card-title {
-  margin: 0 0 0.65rem;
-  font-family: var(--font-label, 'Cinzel', serif);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-accent);
 }
 
 .translation-source {
@@ -768,8 +759,6 @@
 .sober-read {
   font-style: normal !important;
   color: var(--color-ink) !important;
-  border-left: 3px solid var(--color-accent);
-  padding-left: 0.9rem;
   margin-bottom: 0.95rem !important;
   font-size: 1.05rem;
   line-height: 1.68;
@@ -779,18 +768,6 @@
   margin: 0 0 0.75rem;
   font-size: 1.02rem;
   color: var(--color-ink);
-}
-
-.transformation-subheading {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--color-heading);
-  margin: 1.15rem 0 0.5rem;
-  text-transform: none;
-  border-bottom: 1px solid rgba(44, 74, 110, 0.15);
-  padding-bottom: 0.3rem;
 }
 
 .lines-hint {
