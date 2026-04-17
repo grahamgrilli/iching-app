@@ -137,19 +137,22 @@ export default function CoinInput({
       </p>
       <CoinKey />
       <div className="line-inputs">
-        {displayOrder.map((idx) => (
-          <div key={idx} className="line-row">
-            <span className="line-label">#{idx + 1}</span>
-            <ThreeCoins
-              value={lines[idx]}
-              onChange={(v) => updateLine(idx, v)}
-              disabled={disabled}
-            />
-            <span className="line-value" title="Line value (optional check)">
-              {lines[idx] === null ? '—' : lines[idx]}
-            </span>
-          </div>
-        ))}
+        {displayOrder.map((idx) => {
+          const isComplete = lines[idx] !== null;
+          return (
+            <div key={idx} className={`line-row ${isComplete ? 'line-row--complete' : ''}`}>
+              <span className="line-label">#{idx + 1}</span>
+              <ThreeCoins
+                value={lines[idx]}
+                onChange={(v) => updateLine(idx, v)}
+                disabled={disabled}
+              />
+              <span className="line-value" title="Line value (optional check)">
+                {lines[idx] === null ? '—' : lines[idx]}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

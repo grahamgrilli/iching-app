@@ -2,19 +2,19 @@
 
 .app {
   --color-bg: #3d4450;
-  --color-ink: #0f1419;
-  --color-cream: #fafaf8;
-  --color-ink-muted: rgba(15, 20, 25, 0.68);
-  --color-heading: #1a2838;
-  --color-accent: #5b7eb3;
+  --color-ink: #111827;
+  --color-cream: #ffffff;
+  --color-ink-muted: #64748b;
+  --color-heading: #0f172a;
+  --color-accent: #475569;
   --frame-radius: 28px;
-  --frame-border: 1px solid rgba(15, 20, 25, 0.1);
+  --frame-border: 1px solid rgba(15, 23, 42, 0.1);
   --card-elevated:
-    0 1px 0 rgba(255, 255, 255, 0.88) inset,
-    0 2px 6px rgba(0, 0, 0, 0.05),
-    0 10px 22px rgba(0, 0, 0, 0.18),
-    0 24px 44px rgba(0, 0, 0, 0.12),
-    0 40px 72px rgba(0, 0, 0, 0.08);
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 10px 22px rgba(0, 0, 0, 0.08),
+    0 24px 44px rgba(0, 0, 0, 0.06),
+    0 40px 72px rgba(0, 0, 0, 0.04);
 
   position: relative;
   min-height: 100vh;
@@ -263,21 +263,21 @@
 }
 
 .coin-key-sample--tails {
-  background: #ebe6dc;
-  border: 2px solid #4a3f28;
+  background: #f8fafc;
+  border: 2px solid #475569;
 }
 
 .coin-key-sample--tails .coin-key-sample-hole {
   background: transparent;
-  border: 2px solid #4a3f28;
+  border: 2px solid #475569;
 }
 
 .coin-key {
   margin-bottom: 1.15rem;
   padding: 0.75rem 0.9rem;
-  background: rgba(232, 226, 212, 0.9);
-  border: 1.5px dashed rgba(20, 20, 20, 0.22);
-  border-radius: 14px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
   font-size: 0.92rem;
   color: var(--color-heading);
 }
@@ -371,9 +371,18 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.45rem 0.55rem;
-  background: rgba(232, 226, 212, 0.65);
+  background: rgba(241, 245, 249, 0.75);
   border-radius: 12px;
-  border: 1px solid rgba(26, 26, 26, 0.12);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.line-row--complete {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: inset 0 0 0 rgba(0,0,0,0);
+  opacity: 0.75;
 }
 
 .line-label {
@@ -452,14 +461,14 @@
 }
 
 .coin-face--tails {
-  border: 2px solid #4a3f28;
-  background: #ebe6dc;
+  border: 2px solid #475569;
+  background: #f8fafc;
   box-shadow: none;
 }
 
 .coin-face--tails .coin-hole {
   background: transparent;
-  border: 2px solid #4a3f28;
+  border: 2px solid #475569;
 }
 
 .coin-face--unset {
@@ -683,15 +692,17 @@
 
 /* Block-print art + image text on its own card (distinct from main cream) */
 .image-illustration-card {
-  margin: 0 0 0.35rem;
-  padding: 1.35rem 1.4rem 1.4rem;
-  background: rgba(228, 224, 214, 0.92);
-  border: 1px solid rgba(44, 74, 110, 0.14);
+  margin: 0 auto 0.35rem;
+  max-width: 420px;
+  padding: 1.25rem 1rem 1.4rem;
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.06);
   border-radius: 18px;
+  text-align: center;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 6px 18px rgba(15, 20, 25, 0.1),
-    0 2px 6px rgba(15, 20, 25, 0.06);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 6px 18px rgba(15, 23, 42, 0.06),
+    0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 .image-illustration-card .image-block-print-wrap {
@@ -941,5 +952,49 @@
     width: 100%;
     max-width: 180px;
     height: auto;
+  }
+}
+
+.reveal-button {
+  display: block;
+  margin: 1.5rem auto 0;
+  padding: 0.75rem 1.65rem;
+  font-family: var(--font-label, 'Cinzel', serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.reveal-button:hover {
+  transform: translateY(-1px);
+  background: var(--color-heading);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+}
+
+.reveal-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+}
+
+.transformation-body {
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

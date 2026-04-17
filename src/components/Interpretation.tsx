@@ -25,6 +25,7 @@ export default function Interpretation({
   lines: LineValue[];
 }) {
   const [expandedLine, setExpandedLine] = useState<number | null>(null);
+  const [showTransformation, setShowTransformation] = useState(false);
   const hasChanging = lines.some(isChanging);
 
   const wilhelmLineText = (lineIndex: number) =>
@@ -113,20 +114,32 @@ export default function Interpretation({
           </h4>
           <p className="chinese">{resulting.chinese} — {resulting.pinyin}</p>
 
-          <p className="judgement-text">{resulting.judgement}</p>
+          {!showTransformation ? (
+            <button
+              type="button"
+              className="reveal-button"
+              onClick={() => setShowTransformation(true)}
+            >
+              Read transformation
+            </button>
+          ) : (
+            <div className="transformation-body">
+              <p className="judgement-text">{resulting.judgement}</p>
 
-          {soberResulting.trim().length > 0 && (
-            <div className="plain-read-card">
-              <p className="sober-read">{soberResulting}</p>
+              {soberResulting.trim().length > 0 && (
+                <div className="plain-read-card">
+                  <p className="sober-read">{soberResulting}</p>
+                </div>
+              )}
+
+              <div className="image-illustration-card">
+                <div className="image-block-print-wrap">
+                  <ImageBlockPrint hexNumber={resulting.number} imageText={resulting.image} />
+                </div>
+                <p className="image-description">{resulting.image}</p>
+              </div>
             </div>
           )}
-
-          <div className="image-illustration-card">
-            <div className="image-block-print-wrap">
-              <ImageBlockPrint hexNumber={resulting.number} imageText={resulting.image} />
-            </div>
-            <p className="image-description">{resulting.image}</p>
-          </div>
         </div>
       )}
     </div>
